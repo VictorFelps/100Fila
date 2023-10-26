@@ -1,0 +1,6 @@
+.background {
+    background-image: url('/image/fundo.jpg'); /* Caminho para a imagem de fundo a partir do diretório 'public' */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
