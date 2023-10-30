@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello</title>
+    <title>100Fila</title>
 </head>
 <body>
 
-
-<id id="hello-react"></id>    
+<div id="root"></div>
     
 @viteReactRefresh
 @vite('resources/js/app.js')
