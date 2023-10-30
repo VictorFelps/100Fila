@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>SoftLand Bootstrap Template - Index</title>
+  <title>100Fila</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -27,9 +27,9 @@
   <link href="assets/css/style.css" rel="stylesheet">
 
   <!-- =======================================================
-  * Template Name: SoftLand
+  * Template Name: 100Fila
   * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/softland-bootstrap-app-landing-page-template/
+  * Template URL: https://bootstrapmade.com/100Fila-bootstrap-app-landing-page-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
@@ -42,7 +42,7 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <h1><a href="index.html">SoftLand</a></h1>
+        <h1><a href="index.html">100Fila</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -98,10 +98,9 @@
         <div class="col-12 hero-text-image">
           <div class="row">
             <div class="col-lg-8 text-center text-lg-start">
-              <h1 data-aos="fade-right">Promote Your App with SoftLand</h1>
-              <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit.</p>
-              <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a href="#" class="btn btn-outline-white">Get started</a></p>
+              <h1 data-aos="fade-right">Melhore seu atendimento com o 100Fila</h1>
+              
+              <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a href="/app/#/cadastro" class="btn btn-outline-white">Cadastre-se</a></p>
             </div>
             <div class="col-lg-4 iphone-wrap">
               <img src="assets/img/phone_1.png" alt="Image" class="phone-1" data-aos="fade-right">
@@ -122,7 +121,7 @@
 
         <div class="row justify-content-center text-center mb-5">
           <div class="col-md-5" data-aos="fade-up">
-            <h2 class="section-heading">Save your time to using SoftLand</h2>
+            <h2 class="section-heading">Poupe tempo utilizando o 100Fila</h2>
           </div>
         </div>
 
@@ -132,8 +131,8 @@
               <div class="wrap-icon icon-1">
                 <i class="bi bi-people"></i>
               </div>
-              <h3 class="mb-3">Explore Your Team</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3 class="mb-3">Sistema de agendamento</h3>
+              <p>Permita que seus clientes agendem facilmente seus atendimentos e consultas.</p>
             </div>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -150,8 +149,8 @@
               <div class="wrap-icon icon-1">
                 <i class="bi bi-bar-chart"></i>
               </div>
-              <h3 class="mb-3">Design To Development</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3 class="mb-3">Estatísticas detalhadas</h3>
+              <p>Obtenha insights valiosos sobre o desempenho das suas filas de atendimento.</p>
             </div>
           </div>
         </div>
@@ -230,105 +229,7 @@
     </section>
 
     <!-- ======= Testimonials Section ======= -->
-    <section class="section border-top border-bottom">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-4">
-            <h2 class="section-heading">Review From Our Users</h2>
-          </div>
-        </div>
-        <div class="row justify-content-center text-center">
-          <div class="col-md-7">
-
-            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-              <div class="swiper-wrapper">
-
-                <div class="swiper-slide">
-                  <div class="review text-center">
-                    <p class="stars">
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill muted"></span>
-                    </p>
-                    <h3>Excellent App!</h3>
-                    <blockquote>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                        aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi,
-                        provident voluptates consectetur maiores quos.</p>
-                    </blockquote>
-
-                    <p class="review-user">
-                      <img src="assets/img/person_1.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                      <span class="d-block">
-                        <span class="text-black">Jean Doe</span>, &mdash; App User
-                      </span>
-                    </p>
-
-                  </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                  <div class="review text-center">
-                    <p class="stars">
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill muted"></span>
-                    </p>
-                    <h3>This App is easy to use!</h3>
-                    <blockquote>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                        aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi,
-                        provident voluptates consectetur maiores quos.</p>
-                    </blockquote>
-
-                    <p class="review-user">
-                      <img src="assets/img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                      <span class="d-block">
-                        <span class="text-black">Johan Smith</span>, &mdash; App User
-                      </span>
-                    </p>
-
-                  </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                  <div class="review text-center">
-                    <p class="stars">
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill"></span>
-                      <span class="bi bi-star-fill muted"></span>
-                    </p>
-                    <h3>Awesome functionality!</h3>
-                    <blockquote>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                        aperiam dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi,
-                        provident voluptates consectetur maiores quos.</p>
-                    </blockquote>
-
-                    <p class="review-user">
-                      <img src="assets/img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
-                      <span class="d-block">
-                        <span class="text-black">Jean Thunberg</span>, &mdash; App User
-                      </span>
-                    </p>
-
-                  </div>
-                </div><!-- End testimonial item -->
-
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section><!-- End Testimonials Section -->
-
+    
     <!-- ======= CTA Section ======= -->
     <section class="section cta-section">
       <div class="container">
@@ -350,7 +251,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 mb-4 mb-md-0">
-          <h3>About SoftLand</h3>
+          <h3>Sobre o 100Fila</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam
             dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi.</p>
           <p class="social">
@@ -393,13 +294,13 @@
 
       <div class="row justify-content-center text-center">
         <div class="col-md-7">
-          <p class="copyright">&copy; Copyright SoftLand. All Rights Reserved</p>
+          <p class="copyright">&copy; Copyright 100Fila. All Rights Reserved</p>
           <div class="credits">
             <!--
             All the links in the footer should remain intact.
             You can delete the links only if you purchased the pro version.
             Licensing information: https://bootstrapmade.com/license/
-            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=SoftLand
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=100Fila
           -->
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
           </div>
