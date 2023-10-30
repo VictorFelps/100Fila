@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
@@ -8,18 +7,7 @@ import Card from 'react-bootstrap/Card';
 import Fundo from"./image/fundo.jpg";
 
 function HelloReact() {
-    const divStyle = {
-        backgroundImage: `url(${fundo})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    };
-    
     return (
-        <div style={divStyle}>
         <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
             <Card style={{ width: '400px', height: '400px' }}>
                 <Card.Body>
@@ -51,7 +39,6 @@ function HelloReact() {
                 </Card.Body>
             </Card>
         </Container>
-</div>
     );
 }
 
