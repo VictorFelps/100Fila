@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\EstabelecimentoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,5 @@ Route::get('usuarios', function() {
         
     ]);
 });
+
+Route::resource('estabelecimento', EstabelecimentoController::class);
