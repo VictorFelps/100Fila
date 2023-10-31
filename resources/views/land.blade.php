@@ -50,7 +50,7 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="active " href="index.html">Home</a></li>
-          <li><a href="features.html">Features</a></li>
+          <li><a href="features.html">Funcionalidades</a></li>
           <li><a href="pricing.html">Pricing</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -103,8 +103,7 @@
               <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a href="/app/#/cadastro" class="btn btn-outline-white">Cadastre-se</a></p>
             </div>
             <div class="col-lg-4 iphone-wrap">
-              <img src="assets/img/phone_1.png" alt="Image" class="phone-1" data-aos="fade-right">
-              <img src="assets/img/phone_2.png" alt="Image" class="phone-2" data-aos="fade-right" data-aos-delay="200">
+              
             </div>
           </div>
         </div>

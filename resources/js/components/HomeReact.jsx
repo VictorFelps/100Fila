@@ -48,7 +48,7 @@ const HomeReact = () => {
           {usuarios.map((item, index) => <li key={item.id} className='list-group-item'>{item.nome}</li>)}
         </ul>
         <div className='mt-3'>
-          <Link to="/cadastro" className='btn btn-primary'>cadastrar novo estabelecimento</Link>
+          <Link to="/cadastro" className='btn btn-primary'>Cadastrar novo estabelecimento</Link>
         </div>
       </div>
     </>);
