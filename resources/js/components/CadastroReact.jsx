@@ -12,7 +12,19 @@ const CadastroReact = () => {
     const watchPassword = watch("password");
 
     const onSubmit = (data) => {
+        const _token = document.querySelector('[name="csrf-token"]').getAttribute("content");
+
         alert(JSON.stringify(data));
+        fetch('/register', {
+            method: 'POST', 
+            headers: {
+                'X-CSRF-TOKEN': _token,
+                'content-type': 'application/json',
+                'Accept': 'applicatin/json'
+            },
+            body: JSON.stringify({...{_token}, ...data})
+        }).then(result => console.log(result))
+        .catch(error => console.log('erro', error))
     };
 
     console.log("RENDER");
@@ -70,21 +82,21 @@ const CadastroReact = () => {
                             )}
                         </Form.Group>
 
-                        <Form.Group controlId="formPasswordConfirmation">
+                        <Form.Group controlId="password_confirmation">
                             <Form.Label>Confirmar senha</Form.Label>
                             <Form.Control
                                 className={errors?.passwordConfirmation && "input-error"}
                                 type="password"
                                 placeholder="Repita sua senha "
-                                {...register("passwordConfirmation", {
+                                {...register("password_confirmation", {
                                     required: true,
                                     validate: (value) => value === watchPassword,
                                 })}
                             />
-                            {errors?.passwordConfirmation?.type === "required" && (
+                            {errors?.password_confirmation?.type === "required" && (
                                 <Form.Text className="text-danger">É necessário confirmar a senha.</Form.Text>
                             )}
-                            {errors?.passwordConfirmation?.type === "validate" && (
+                            {errors?.password_confirmation?.type === "validate" && (
                                 <Form.Text className="text-danger">As senhas não são iguais.</Form.Text>
                             )}
                         </Form.Group>
