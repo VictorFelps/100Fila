@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 
+
 const CadastroReact = () => {
     const {
         register,
