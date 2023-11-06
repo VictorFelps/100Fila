@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 
+
 const CadastroReact = () => {
     const {
         register,
@@ -13,6 +14,7 @@ const CadastroReact = () => {
 
     const onSubmit = (data) => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute("content");
+<<<<<<< HEAD
 
         alert(JSON.stringify(data));
         fetch('/register', {
@@ -26,7 +28,21 @@ const CadastroReact = () => {
         }).then(result => console.log(result))
         .catch(error => console.log('erro', error))
     };
+=======
+>>>>>>> 3cdd45f8dcc84c1fc25b4710ed9ca573bdf772b7
 
+        alert(JSON.stringify(data));
+        fetch('/register', {
+            method: 'POST', 
+            headers: {
+                'X-CSRF-TOKEN': _token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({...data, _token})
+        }).then(result => console.log(result))
+        .catch(error => console.log('erro', error))
+    };
     console.log("RENDER");
 
     return (
