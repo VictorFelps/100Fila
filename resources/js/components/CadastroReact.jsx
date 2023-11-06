@@ -19,14 +19,13 @@ const CadastroReact = () => {
             method: 'POST', 
             headers: {
                 'X-CSRF-TOKEN': _token,
-                'content-type': 'application/json',
-                'Accept': 'applicatin/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({...{_token}, ...data})
+            body: JSON.stringify({...data, _token})
         }).then(result => console.log(result))
         .catch(error => console.log('erro', error))
     };
-
     console.log("RENDER");
 
     return (
