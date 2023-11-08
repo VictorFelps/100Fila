@@ -8,16 +8,17 @@ import { Link } from 'react-router-dom';
 import Loader from './Loader';
 
 const HomeReact = () => {
-  const [usuarios, setUsuarios] = useState([]);
+  const [estabelecimentos, setEstabelecimentos] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true)
-    fetch('http://localhost:8000/api/usuarios')
-      .then((response) => response.json())
+    fetch('http://localhost:8001/api/estabelecimento')
+      .then((response) => response.json().catch(e => e))
       .then(json => {
-        setUsuarios(json)
+        setEstabelecimentos(json)
       })
+      .catch(e => { })
       .finally(() => setLoading(false))
   }, [])
 
@@ -43,48 +44,22 @@ const HomeReact = () => {
         </Container>
       </Navbar>
 
+
+
       <div className='container shadow-lg bg-body rounded mt-5 p-3'>
         <h4 className='p-3 border-bottom border-primary'>Estabelecimentos</h4>
         {isLoading && <Loader isLoading={isLoading} />}
-        <ul className='list-group'>
-          {usuarios.map((item, index) => {
-            console.log("Item:", item); // Verifique se os itens estão sendo iterados corretamente
-            return <li key={item.id} className='list-group-item'>{item.nome}</li>;
-          })}
-        </ul>
+        {estabelecimentos.map((item, index) => {
+          console.log("Item:", item); // Verifique se os itens estão sendo iterados corretamente
+          return (
+            <Card key={item.id} as={Link} to={`/estabelecimento/${item.id}`} style={{ marginBottom: '10px' }}>
+              <Card.Body>Estabelecimento</Card.Body>
+            </Card>
+          )
+        })}
         {/* <div className='mt-3'>
             <Link to="/cadastro" className='btn btn-primary'>Cadastrar novo estabelecimento</Link>
         </div> */}
-<Card as={Link} to="/estabelecimento1" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento2" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 2</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento3" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 3</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento4" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 4</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento5" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 5</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento6" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 6</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento7" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 7</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento8" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 8</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento9" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 9</Card.Body>
-            </Card>
-            <Card as={Link} to="/estabelecimento10" style={{ marginBottom: '10px' }}>
-                <Card.Body>Estabelecimento 10</Card.Body>
-            </Card>
       </div>
     </>);
 };

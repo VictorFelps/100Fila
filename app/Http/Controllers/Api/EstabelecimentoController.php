@@ -41,4 +41,14 @@ class EstabelecimentoController extends Controller
         return response()->json(Estabelecimento::find($id), 204);
     }
 
+    public function fila($id)
+    {
+        //dd($id);
+        return response()->json([
+            'estabelecimento' => Estabelecimento::find($id),
+            'fila' => [1,2,3]
+        ]);
+
+    }
+
 }

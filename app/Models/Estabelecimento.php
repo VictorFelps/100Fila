@@ -10,4 +10,6 @@ class Estabelecimento extends Model
     use HasFactory;
 
     protected $table = 'estabelecimento';
+    protected $key = 'id';
+
 }
