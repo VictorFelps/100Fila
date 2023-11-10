@@ -22,4 +22,17 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 
 Route::resource('estabelecimento', EstabelecimentoController::class)->withoutMiddleware(['web']);
-Route::get('estabelecimento/{id}/fila', [EstabelecimentoController::class, 'fila'])->withoutMiddleware(['web']);
+
+Route::get('estabelecimento/{id}/fila', [EstabelecimentoController::class, 'fila'])
+    ->where('id', '[0-9]')
+    ->withoutMiddleware(['web']);
+
+Route::get('estabelecimento/{idEstabelecimento}/fila/{idFila}/entrar-na-fila', [EstabelecimentoController::class, 'entrarNaFila'])
+    ->where('idEstabelecimento', '[0-9]+')
+    ->where('idFila', '[0-9]+')
+    ->withoutMiddleware(['web']);
+
+Route::get('estabelecimento/{idEstabelecimento}/fila/{idFila}/sair-da-fila', [EstabelecimentoController::class, 'sairDaFila'])
+    ->where('idEstabelecimento', '[0-9]+')
+    ->where('idFila', '[0-9]+')
+    ->withoutMiddleware(['web']);

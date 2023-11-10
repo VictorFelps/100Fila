@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Estabelecimento;
+use App\Models\Fila;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EstabelecimentoController extends Controller
@@ -44,11 +46,51 @@ class EstabelecimentoController extends Controller
     public function fila($id)
     {
         //dd($id);
+        $toDay = Carbon::now()->format('Y-m-d');
+        $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->first();
+        if(!$filaAtual) {
+            $filaAtual = Fila::create([
+                'estabelecimento_id' => $id,
+                'created_at' => $toDay,
+                'current_state' => 0,
+            ]);
+        }
+        
         return response()->json([
             'estabelecimento' => Estabelecimento::find($id),
-            'fila' => [1,2,3]
+            'fila' => $filaAtual
         ]);
 
     }
 
+    public function entrarNaFila($idEstabelecimento, $idFila)
+    {
+        //dd($id);
+        $fila = Fila::find($idFila);
+        $fila->current_state = $fila->current_state + 1;
+        $fila->save();
+        
+        return response()->json([
+            'message' => 'fila atualizada com sucesso'
+        ]);
+
+    }
+
+    public function sairDaFila($idEstabelecimento, $idFila)
+    {
+        //dd($id);
+        $fila = Fila::find($idFila);
+        $fila->current_state = $fila->current_state - 1;
+        $fila->save();
+        
+        return response()->json([
+            'message' => 'fila atualizada com sucesso'
+        ]);
+
+    }
+
+
+   
+    
 }
+
