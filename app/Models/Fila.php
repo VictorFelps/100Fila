@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fila extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'fila';
     protected $key = 'id';
@@ -20,6 +22,7 @@ class Fila extends Model
 
     protected $fillable = [
         'estabelecimento_id',
+        'user_id',
         'created_at',
         'current_state',
     ];

@@ -8,9 +8,17 @@ const App = () => {
 
 
     const requisitarFilaEstabelecimento = async () => {
+        const _token = document.querySelector('[name="csrf-token"]').getAttribute("content");
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`);
+            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`,{
+                method: 'GET', 
+                headers: {
+                    'X-CSRF-TOKEN': _token,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
             const filaJson = await response.json();
             setFila(filaJson.fila);
         } catch (e) {
@@ -27,7 +35,7 @@ const App = () => {
     const entrarNaFila = async () => {
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/${fila.id}/entrar-na-fila`);
+            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila`);
             requisitarFilaEstabelecimento()
 
         } catch (e) {
@@ -45,7 +53,7 @@ const App = () => {
         }
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/${fila.id}/sair-da-fila`);
+            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/sair-da-fila`);
             requisitarFilaEstabelecimento()
         } catch (e) {
             console.log('error', e)
@@ -58,7 +66,7 @@ const App = () => {
         <div style={styles.container}>
             <h2 style={styles.title}>Estabelecimento #{id}</h2>
             <div style={styles.filaContainer}>
-                <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila.current_state}</p>
+                <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
             </div>
             <div className="d-flex justify-content-around mt-3">
                 <button className="btn btn-primary" onClick={entrarNaFila} disabled={loading}>

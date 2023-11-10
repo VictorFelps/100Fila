@@ -7,6 +7,7 @@ use App\Models\Estabelecimento;
 use App\Models\Fila;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EstabelecimentoController extends Controller
 {
@@ -47,28 +48,28 @@ class EstabelecimentoController extends Controller
     {
         //dd($id);
         $toDay = Carbon::now()->format('Y-m-d');
-        $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->first();
-        if(!$filaAtual) {
-            $filaAtual = Fila::create([
-                'estabelecimento_id' => $id,
-                'created_at' => $toDay,
-                'current_state' => 0,
-            ]);
-        }
+        $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->count();        
         
         return response()->json([
             'estabelecimento' => Estabelecimento::find($id),
-            'fila' => $filaAtual
+            'fila' => $filaAtual,
         ]);
 
     }
 
-    public function entrarNaFila($idEstabelecimento, $idFila)
+    public function entrarNaFila($idEstabelecimento)
     {
         //dd($id);
-        $fila = Fila::find($idFila);
-        $fila->current_state = $fila->current_state + 1;
-        $fila->save();
+        $toDay = Carbon::now()->format('Y-m-d');
+        $data = [
+            'estabelecimento_id' => $idEstabelecimento,
+            'user_id' => Auth::id(),
+            'created_at' => $toDay
+        ];
+        $fila = Fila::where($data)->first();
+        if(!$fila) {
+            Fila::insert($data);
+        }
         
         return response()->json([
             'message' => 'fila atualizada com sucesso'
@@ -76,12 +77,16 @@ class EstabelecimentoController extends Controller
 
     }
 
-    public function sairDaFila($idEstabelecimento, $idFila)
+    public function sairDaFila($idEstabelecimento)
     {
         //dd($id);
-        $fila = Fila::find($idFila);
-        $fila->current_state = $fila->current_state - 1;
-        $fila->save();
+        $toDay = Carbon::now()->format('Y-m-d');
+        $data = [
+            'estabelecimento_id' => $idEstabelecimento,
+            'user_id' => Auth::id(),
+            'created_at' => $toDay
+        ];
+        $fila = Fila::where($data)->delete();
         
         return response()->json([
             'message' => 'fila atualizada com sucesso'
