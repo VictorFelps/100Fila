@@ -27,7 +27,6 @@ const CadastroReact = () => {
         .catch(error => console.log('erro', error))
     };
 
-    console.log("RENDER");
 
     return (
         <div style={{ backgroundColor: "#e6f7ff", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
