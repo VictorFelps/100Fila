@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+<<<<<<< HEAD
+=======
+import Layout from "./Layout";
+>>>>>>> 0edf4ccb44040b7117476695255126040296aa69
 
 const App = () => {
     const [fila, setFila] = useState(0);
     const [loading, setLoading] = useState(false)
+<<<<<<< HEAD
     const {id} = useParams();
+=======
+    const { id } = useParams();
+>>>>>>> 0edf4ccb44040b7117476695255126040296aa69
 
 
     const requisitarFilaEstabelecimento = async () => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute("content");
         setLoading(true)
         try {
+<<<<<<< HEAD
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`,{
                 method: 'GET', 
+=======
+            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`, {
+                method: 'GET',
+>>>>>>> 0edf4ccb44040b7117476695255126040296aa69
                 headers: {
                     'X-CSRF-TOKEN': _token,
                     'Content-Type': 'application/json',
@@ -63,6 +76,7 @@ const App = () => {
     };
 
     return (
+<<<<<<< HEAD
         <div style={styles.container}>
             <h2 style={styles.title}>Estabelecimento #{id}</h2>
             <div style={styles.filaContainer}>
@@ -77,6 +91,24 @@ const App = () => {
                 </button>
             </div>
         </div>
+=======
+        <Layout>
+            <div style={styles.container}>
+                <h2 style={styles.title}>Estabelecimento #{id}</h2>
+                <div style={styles.filaContainer}>
+                    <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
+                </div>
+                <div className="d-flex justify-content-around mt-3">
+                    <button className="btn btn-primary" onClick={entrarNaFila} disabled={loading}>
+                        Entrar na fila
+                    </button>
+                    <button className="btn btn-secondary" onClick={sairDaFila} disabled={loading}>
+                        Sair da fila
+                    </button>
+                </div>
+            </div>
+        </Layout>
+>>>>>>> 0edf4ccb44040b7117476695255126040296aa69
     );
 };
 

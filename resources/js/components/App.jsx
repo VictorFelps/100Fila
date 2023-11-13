@@ -5,6 +5,7 @@ import HomeReact from './HomeReact'; // Importe o componente HomeReact
 import CadastroReact from './CadastroReact'; // Importe o componente CadastroReact
 import LoginReact from './LoginReact';
 import EstabelecimentoView from './EstabelecimentoView';
+import EstabelecimentoNew from './EstabelecimentoNew';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/cadastro" element={<CadastroReact />} />
         <Route path="/estabelecimento">
           <Route path=':id' element={<EstabelecimentoView />} />
+          <Route path='novo' element={<EstabelecimentoNew />} />
         </Route>
         <Route path="/login" element={<LoginReact />} />
       </Routes>
