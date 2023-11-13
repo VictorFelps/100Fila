@@ -4,10 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 
 export default function LoginReact() {
-
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -27,7 +28,10 @@ export default function LoginReact() {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({...data, _token})
-        }).then(result => console.log(result))
+        }).then(result => {
+            console.log(result)
+            navigate('/')
+        })
         .catch(error => console.log('erro', error))
     };
 
