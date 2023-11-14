@@ -1,8 +1,15 @@
 import React from 'react';
 import { Card, Container, Form, Button } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from './Layout';
 
 export default () => {
+    const navigate = useNavigate();
+
+    const handleVoltarClick = () => {
+        navigate('/');
+    };
+
     return (
         <Layout>
             <Container>
@@ -32,9 +39,15 @@ export default () => {
                                 <Form.Control type="text" placeholder="Informe a localização" />
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" style={{ marginTop: '10px' }}>
-                                Cadastrar
-                            </Button>
+                            <div className="d-flex justify-content-between">
+                                <Button variant="primary" type="submit">
+                                    Cadastrar
+                                </Button>
+
+                                <Button variant="primary" onClick={handleVoltarClick}>
+                                    Voltar
+                                </Button>
+                            </div>
                         </Form>
                     </Card.Body>
                 </Card>
