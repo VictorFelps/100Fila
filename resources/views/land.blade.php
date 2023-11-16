@@ -99,11 +99,19 @@
           <div class="row">
             <div class="col-lg-8 text-center text-lg-start">
               <h1 data-aos="fade-right">Melhore seu atendimento com o 100Fila</h1>
+
+              <div>
+                <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500" style="display: inline-block; margin-right: 10px;">
+                  <a href="/app/#/cadastro" class="btn btn-outline-white">Cadastre-se</a>
+                </p>
+                <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500" style="display: inline-block;">
+                  <a href="/app/#/login" class="btn btn-outline-white">Entrar</a>
+                </p>
+              </div>
               
-              <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a href="/app/#/cadastro" class="btn btn-outline-white">Cadastre-se</a></p>
             </div>
             <div class="col-lg-4 iphone-wrap">
-              
+
             </div>
           </div>
         </div>
@@ -228,7 +236,7 @@
     </section>
 
     <!-- ======= Testimonials Section ======= -->
-    
+
     <!-- ======= CTA Section ======= -->
     <section class="section cta-section">
       <div class="container">
