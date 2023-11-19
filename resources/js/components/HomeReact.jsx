@@ -35,7 +35,11 @@ const HomeReact = () => {
           console.log("Item:", item); // Verifique se os itens estão sendo iterados corretamente
           return (
             <Card key={item.id} as={Link} to={`/estabelecimento/${item.id}`} style={{ marginBottom: '10px' }}>
-              <Card.Body>Estabelecimento</Card.Body>
+              <Card.Body>
+                <h5>{item.nome}</h5>
+                <p><strong>CNPJ:</strong> {item.cnpj}</p>
+                <p><strong>Localização:</strong> {item.local}</p>
+              </Card.Body>
             </Card>
           )
         })}
