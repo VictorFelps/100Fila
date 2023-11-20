@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Button, Modal } from 'react-bootstrap';
 import Layout from './Layout';
-import backgroundImage from './imagem.jpg'; // Import the background image
+import backgroundImage from './imagem.jpg';
 
 
 const App = () => {
