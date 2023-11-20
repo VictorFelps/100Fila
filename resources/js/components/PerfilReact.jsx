@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
+import backgroundImage from './imagem.jpg';
 
 const PerfilReact = () => {
   const [userData, setUserData] = useState(null);
@@ -14,6 +15,7 @@ const PerfilReact = () => {
   }, []);
 
   return (
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
     <div style={{ padding: "20px", textAlign: "center" }}>
       <h2>User Profile</h2>
       {userData ? (
@@ -31,6 +33,8 @@ const PerfilReact = () => {
         <p>Loading user data...</p>
       )}
     </div>
+    </div>
+
   );
 };
 

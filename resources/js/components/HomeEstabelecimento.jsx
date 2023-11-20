@@ -29,10 +29,14 @@ const HomeReact = () => {
       >
         <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
           <span>Estabelecimentos</span>
+          <Link to={'/estabelecimento/novo'} className='btn btn-primary'>
+            <FaFileAlt className='mr-2' />
+            Novo estabelecimento
+          </Link>
         </h4>
         {isLoading && <Loader isLoading={isLoading} />}
         {estabelecimentos.map((item, index) => (
-          <Card key={item.id} as={Link} to={`/estabelecimento/${item.id}`} style={{ marginBottom: '10px' }}>
+          <Card style={{ marginBottom: '10px' }}>
             <Card.Body>
               <h5>
                 <FaStore className='mr-2' />

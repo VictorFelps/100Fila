@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import backgroundImage from './imagem.jpg';
+import logoImage from './logo.jpg';
+
 
 const CadastroReact = () => {
     const {
@@ -16,23 +19,31 @@ const CadastroReact = () => {
 
         alert(JSON.stringify(data));
         fetch('/register', {
-    method: 'POST',
-    headers: {
-        'X-CSRF-TOKEN': _token,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({...data, _token})
-})
-.then(response => response.json())
-.then(result => console.log(result))
-.catch(error => console.error('Erro na solicitação:', error));
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': _token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({...data, _token})
+        })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.error('Erro na solicitação:', error));
     };
 
-
     return (
-        <div style={{ backgroundColor: "#e6f7ff", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Card style={{ width: '25rem' }}>
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+            <Card style={{ width: '25rem' }}><br></br>
+            <h4 className="text-center mb-4">Cadastro</h4>
+                    <Card.Img
+                        variant="top"
+                        src={logoImage}
+                        alt="Logo"
+                        style={{ width: '50%', height: 'auto', display: 'block', margin: 'auto' }}
+                    />
+
                 <Card.Body>
                     <Form>
                         <Form.Group controlId="formName">
@@ -105,10 +116,10 @@ const CadastroReact = () => {
                         <Button variant="primary" onClick={handleSubmit(onSubmit)} style={{ marginTop: '10px' }}>
                             Cadastrar-se
                         </Button>
-
                     </Form>
                 </Card.Body>
             </Card>
+        </Container>
         </div>
     );
 };

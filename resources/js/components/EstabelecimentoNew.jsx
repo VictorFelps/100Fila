@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Container, Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from './Layout';
+import backgroundImage from './imagem.jpg';
 
 export default () => {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default () => {
     };
 
     return (
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
         <Layout>
             <Container>
                 <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
@@ -53,5 +55,6 @@ export default () => {
                 </Card>
             </Container>
         </Layout>
+        </div>
     );
 };
