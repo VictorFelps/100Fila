@@ -16,15 +16,17 @@ const CadastroReact = () => {
 
         alert(JSON.stringify(data));
         fetch('/register', {
-            method: 'POST', 
-            headers: {
-                'X-CSRF-TOKEN': _token,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({...data, _token})
-        }).then(result => console.log(result))
-        .catch(error => console.log('erro', error))
+    method: 'POST',
+    headers: {
+        'X-CSRF-TOKEN': _token,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({...data, _token})
+})
+.then(response => response.json())
+.then(result => console.log(result))
+.catch(error => console.error('Erro na solicitação:', error));
     };
 
 

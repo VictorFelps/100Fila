@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import backgroundImage from './imagem.jpg';
 
 
 export default function LoginReact() {
@@ -36,6 +37,7 @@ export default function LoginReact() {
     };
 
     return (
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
         <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
             <Card style={{ width: '400px', height: '300px' }}>
                 <Card.Body>
@@ -59,5 +61,6 @@ export default function LoginReact() {
                 </Card.Body>
             </Card>
         </Container>
+        </div>
     );
 }
