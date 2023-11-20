@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Button, Modal } from 'react-bootstrap';
 import Layout from './Layout';
+import backgroundImage from './imagem.jpg'; // Import the background image
+
 
 const App = () => {
     const [fila, setFila] = useState(0);
@@ -74,6 +76,7 @@ const App = () => {
     };
 
     return (
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
         <Layout>
             <div style={styles.container}>
                 <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
@@ -108,6 +111,7 @@ const App = () => {
                 </Modal>
             </div>
         </Layout>
+        </div>
     );
 };
 
