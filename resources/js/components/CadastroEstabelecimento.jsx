@@ -6,10 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import backgroundImage from "./imagem.jpg";
 import logoImage from "./logo.jpg";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Troque para useNavigate
 
 const CadastroEstabelecimento = () => {
-  const history = useHistory();
+  const navigate = useNavigate(); // Altere para useNavigate
 
   const {
     register,
@@ -41,7 +41,7 @@ const CadastroEstabelecimento = () => {
           alert(JSON.stringify(data));
           toast.success("Cadastrado com sucesso!");
           // Redireciona para a página de login após o cadastro
-          history.push("/login");
+          navigate("/login"); // Altere para navigate
         }, 1000);
       })
       .catch((error) => {
