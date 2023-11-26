@@ -8,7 +8,7 @@ export default () => {
     const navigate = useNavigate();
 
     const handleVoltarClick = () => {
-        navigate('/');
+        navigate('/home-estabelecimento');
     };
 
     return (

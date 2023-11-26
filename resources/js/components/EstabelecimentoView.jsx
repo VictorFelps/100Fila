@@ -4,7 +4,6 @@ import { Button, Modal } from 'react-bootstrap';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
 
-
 const App = () => {
     const [fila, setFila] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -46,14 +45,36 @@ const App = () => {
         handleShowModal();
     };
 
+    const notificarUsuario = (mensagem) => {
+        // Verifica se o navegador suporta notificações
+        if ('Notification' in window) {
+            // Verifica se já foi concedida permissão
+            if (Notification.permission === 'granted') {
+                new Notification(mensagem);
+            } else if (Notification.permission !== 'denied') {
+                // Caso não tenha sido concedida permissão, solicita ao usuário
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification(mensagem);
+                    }
+                });
+            }
+        }
+    };
+
     const confirmarEntrarNaFila = async () => {
         handleCloseModal();
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila`);
+            console.log('Resposta da solicitação:', response);
+
+            // Notificação ao entrar na fila
+            notificarUsuario("Você entrou na fila!");
+
             requisitarFilaEstabelecimento();
         } catch (e) {
-            console.log('error', e);
+            console.error('Erro ao entrar na fila:', e);
         } finally {
             setLoading(false);
         }
@@ -76,41 +97,41 @@ const App = () => {
     };
 
     return (
-        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
-        <Layout>
-            <div style={styles.container}>
-                <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
-                <div style={styles.filaContainer}>
-                    <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
-                </div>
-                <div className="d-flex justify-content-around mt-3">
-                    <button className="btn btn-primary" onClick={entrarNaFila} disabled={loading}>
-                        Entrar na fila
-                    </button>
-                    <button className="btn btn-secondary" onClick={sairDaFila} disabled={loading}>
-                        Sair da fila
-                    </button>
-                </div>
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <Layout>
+                <div style={styles.container}>
+                    <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
+                    <div style={styles.filaContainer}>
+                        <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
+                    </div>
+                    <div className="d-flex justify-content-around mt-3">
+                        <button className="btn btn-primary" onClick={entrarNaFila} disabled={loading}>
+                            Entrar na fila
+                        </button>
+                        <button className="btn btn-secondary" onClick={sairDaFila} disabled={loading}>
+                            Sair da fila
+                        </button>
+                    </div>
 
-                {/* Modal de Confirmação */}
-                <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Confirmação</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Tem certeza de que deseja entrar na fila?
-                    </Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="primary" onClick={confirmarEntrarNaFila}>
-                            Sim
-                        </Button>
-                        <Button variant="secondary" onClick={handleCloseModal}>
-                            Não
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </div>
-        </Layout>
+                    {/* Modal de Confirmação */}
+                    <Modal show={showModal} onHide={handleCloseModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirmação</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Tem certeza de que deseja entrar na fila?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={confirmarEntrarNaFila}>
+                                Sim
+                            </Button>
+                            <Button variant="secondary" onClick={handleCloseModal}>
+                                Não
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            </Layout>
         </div>
     );
 };
@@ -120,7 +141,7 @@ const styles = {
         textAlign: 'center',
         margin: '50px auto',
         padding: '20px',
-        maxWidth: '600px',
+        maxWidth: '800px', // Aumentei o tamanho para 800px
         backgroundColor: '#f8f8f8',
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
