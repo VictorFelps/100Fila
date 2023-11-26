@@ -28,7 +28,7 @@ export default ({ children }) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Link to="/cadastro" className="nav-link">Cadastro</Link>
+                        <Link to="/perfil" className="nav-link">Perfil</Link>
                         <Link to="/" className="nav-link">Estabelecimentos</Link>
                         <NavLink onClick={logout}>Sair</NavLink>
                     </Nav>
