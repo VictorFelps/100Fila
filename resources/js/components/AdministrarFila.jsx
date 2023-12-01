@@ -9,14 +9,14 @@ const AdministrarFila = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
+    fetch(`/100fila/api/estabelecimento/${id}/fila`)
       .then(response => response.json())
       .then(data => setFila(data))
       .catch(error => console.error('Erro ao buscar fila:', error));
   }, [id]);
 
   const adicionarPessoaFila = () => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/adicionar`, { method: 'POST' })
+    fetch(`/100fila/api/estabelecimento/${id}/fila/adicionar`, { method: 'POST' })
       .then(() => atualizarFila())
       .catch(error => console.error('Erro ao adicionar pessoa à fila:', error));
   };
@@ -30,13 +30,13 @@ const AdministrarFila = () => {
   };
 
   const removerPessoaFila = () => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/remover`, { method: 'DELETE' })
+    fetch(`/100fila/api/estabelecimento/${id}/fila/remover`, { method: 'DELETE' })
       .then(() => atualizarFila())
       .catch(error => console.error('Erro ao remover pessoa da fila:', error));
   };
 
   const atualizarFila = () => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
+    fetch(`/100fila/api/estabelecimento/${id}/fila`)
       .then(response => response.json())
       .then(data => setFila(data))
       .catch(error => console.error('Erro ao buscar fila:', error));

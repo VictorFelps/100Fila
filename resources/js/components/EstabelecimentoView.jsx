@@ -18,7 +18,7 @@ const App = () => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute('content');
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`, {
+            const response = await fetch(`/100fila/api/estabelecimento/${id}/fila`, {
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': _token,
@@ -66,7 +66,7 @@ const App = () => {
         handleCloseModal();
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila`);
+            const response = await fetch(`/100fila/api/estabelecimento/${id}/fila/entrar-na-fila`);
             console.log('Resposta da solicitação:', response);
 
             // Notificação ao entrar na fila
@@ -87,7 +87,7 @@ const App = () => {
         }
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/sair-da-fila`);
+            const response = await fetch(`/100fila/api/estabelecimento/${id}/fila/sair-da-fila`);
             requisitarFilaEstabelecimento();
         } catch (e) {
             console.log('error', e);

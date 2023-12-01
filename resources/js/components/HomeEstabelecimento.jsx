@@ -12,7 +12,7 @@ const HomeReact = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8001/api/estabelecimento')
+    fetch('/100fila/api/estabelecimento')
       .then((response) => response.json().catch(e => e))
       .then(json => {
         setEstabelecimentos(json);
