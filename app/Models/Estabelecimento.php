@@ -12,4 +12,13 @@ class Estabelecimento extends Model
     protected $table = 'estabelecimento';
     protected $key = 'id';
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'tempo',
+        'nome',
+        'local',
+        'cnpj'
+    ];
+
 }

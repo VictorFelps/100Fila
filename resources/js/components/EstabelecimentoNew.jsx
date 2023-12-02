@@ -3,13 +3,33 @@ import { Card, Container, Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
+import { useForm } from 'react-hook-form';
 
 export default () => {
     const navigate = useNavigate();
+    const { register, handleSubmit, watch, formState: { errors}} = useForm()
 
     const handleVoltarClick = () => {
         navigate('/home-estabelecimento');
     };
+
+    const onSubmit = (data) => {
+        const _token = document.querySelector('[name="csrf-token"]').getAttribute("content");
+        
+        fetch('/api/estabelecimento', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': _token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({...data, _token})
+        })
+        .then(response => {
+            navigate('/home-estabelecimento');
+        })
+        .catch(error => console.error('Erro na solicitação:', error));
+    }
 
     return (
         <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
@@ -23,26 +43,38 @@ export default () => {
                         <Form>
                             <Form.Group controlId="formTempoMedio" style={{ marginBottom: '15px' }}>
                                 <Form.Label>Tempo médio de atendimento:</Form.Label>
-                                <Form.Control type="number" placeholder="Informe o tempo em minutos" />
+                                <Form.Control type="number"
+                                    className={errors?.tempo && "input-error"}
+                                    placeholder="Informe o tempo em minutos"
+                                    {...register("tempo", { required: true })} />
                             </Form.Group>
 
                             <Form.Group controlId="formNomeEstabelecimento" style={{ marginBottom: '15px' }}>
                                 <Form.Label>Nome do estabelecimento:</Form.Label>
-                                <Form.Control type="text" placeholder="Informe o nome do estabelecimento" />
+                                <Form.Control type="text" 
+                                    className={errors?.nome && "input-error"}
+                                    placeholder="Informe o nome do estabelecimento" 
+                                    {...register("nome", { required: true })} />
                             </Form.Group>
 
                             <Form.Group controlId="formCnpj" style={{ marginBottom: '15px' }}>
                                 <Form.Label>CNPJ:</Form.Label>
-                                <Form.Control type="text" placeholder="Informe o CNPJ" />
+                                <Form.Control type="text" 
+                                    className={errors?.cnpj && "input-error"}
+                                    placeholder="Informe o CNPJ" 
+                                    {...register("cnpj", { required: true })} />
                             </Form.Group>
 
                             <Form.Group controlId="formLocalizacao" style={{ marginBottom: '15px' }}>
                                 <Form.Label>Localização:</Form.Label>
-                                <Form.Control type="text" placeholder="Informe a localização" />
+                                <Form.Control type="text" 
+                                    className={errors?.local && "input-error"}
+                                    placeholder="Informe a localização" 
+                                    {...register("local", { required: true })} />
                             </Form.Group>
 
                             <div className="d-flex justify-content-between">
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" onClick={handleSubmit(onSubmit)}>
                                     Cadastrar
                                 </Button>
 

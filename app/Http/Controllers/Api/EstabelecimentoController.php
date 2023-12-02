@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Estabelecimento;
 use App\Models\Fila;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,17 @@ class EstabelecimentoController extends Controller
         }
 
         return response()->json(Estabelecimento::find($id));
+    }
+
+    public function store(Request $request) 
+    {
+        try {
+            $estabelecimento = Estabelecimento::create($request->all());
+            return response()->json($estabelecimento);
+        } catch(Exception $e) {
+            return response()->json($e->getMessage());
+        }
+        
     }
 
     public function edit(Request $request, string $id)
