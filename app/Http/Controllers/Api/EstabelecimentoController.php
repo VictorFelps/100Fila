@@ -69,6 +69,14 @@ class EstabelecimentoController extends Controller
 
     }
 
+    public function pessoas($id)
+    {
+        $toDay = Carbon::now()->format('Y-m-d');
+        $filaAtual = Fila::with(['user','estabelecimento'])->where(['estabelecimento_id' => $id, 'created_at' => $toDay])->get();
+        
+        return response()->json($filaAtual);
+    }
+
     public function entrarNaFila($idEstabelecimento)
     {
         //dd($id);

@@ -26,4 +26,14 @@ class Fila extends Model
         'created_at',
         'current_state',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function estabelecimento()
+    {
+        return $this->belongsTo(Estabelecimento::class, 'estabelecimento_id', 'id');
+    }
 }

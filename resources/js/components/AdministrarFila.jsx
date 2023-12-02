@@ -9,7 +9,7 @@ const AdministrarFila = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
+    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/pessoas`)
       .then(response => response.json())
       .then(data => setFila(data))
       .catch(error => console.error('Erro ao buscar fila:', error));
@@ -86,9 +86,9 @@ const AdministrarFila = () => {
               <tbody>
                 {fila.map((pessoa, index) => (
                   <tr key={index}>
-                    <td>{pessoa.nome}</td>
-                    <td>{pessoa.email}</td>
-                    <td>{formatarTempoEspera(pessoa.tempoEspera)}</td>
+                    <td>{pessoa.user.name}</td>
+                    <td>{pessoa.user.email}</td>
+                    <td>{formatarTempoEspera(pessoa.estabelecimento.tempo)}</td>
                     <td>{index + 1}</td>
                   </tr>
                 ))}
