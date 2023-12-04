@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { Button, Modal } from 'react-bootstrap';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
+import { Link } from 'react-router-dom';
 
 const App = () => {
     const [fila, setFila] = useState(0);
@@ -105,12 +106,18 @@ const App = () => {
                         <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
                     </div>
                     <div className="d-flex justify-content-around mt-3">
-                        <button className="btn btn-primary" onClick={entrarNaFila} disabled={loading}>
+                        <button className="btn btn-primary" style={{ marginRight: '8px' }} onClick={entrarNaFila} disabled={loading}>
                             Entrar na fila
                         </button>
-                        <button className="btn btn-secondary" onClick={sairDaFila} disabled={loading}>
+                        <button className="btn btn-secondary" style={{ marginLeft: '8px', marginRight: '8px' }} onClick={sairDaFila} disabled={loading}>
                             Sair da fila
                         </button>
+                        {/* Botão para voltar para a página inicial */}
+                        <Link to="/">
+                            <button className="btn btn-info" style={{ marginLeft: '8px' }}>
+                                Voltar
+                            </button>
+                        </Link>
                     </div>
 
                     {/* Modal de Confirmação */}
