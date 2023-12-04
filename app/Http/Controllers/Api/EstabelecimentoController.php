@@ -60,10 +60,17 @@ class EstabelecimentoController extends Controller
     {
         //dd($id);
         $toDay = Carbon::now()->format('Y-m-d');
-        $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->count();        
+        $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->count();
+        $chamado = Fila::where([
+            'estabelecimento_id' => $id, 
+            'created_at' => $toDay, 
+            'user_id' => Auth::id(),
+            'current_state' => 'CHAMANDO'
+        ])->count();
         
         return response()->json([
             'estabelecimento' => Estabelecimento::find($id),
+            'chamado' => $chamado,
             'fila' => $filaAtual,
         ]);
 
@@ -112,6 +119,23 @@ class EstabelecimentoController extends Controller
             'message' => 'fila atualizada com sucesso'
         ]);
 
+    }
+
+    public function chamarPessoaDaFila($idEstabelecimento)
+    {
+        $toDay = Carbon::now()->format('Y-m-d');
+        $data = [
+            'estabelecimento_id' => $idEstabelecimento,
+            'created_at' => $toDay
+        ];
+
+        Fila::where([
+            'current_state' => 'CHAMANDO'
+        ])->delete();
+
+        $fila = Fila::where($data)->orderBy('id', 'asc')->first();
+        $fila->current_state = 'CHAMANDO';
+        $fila->save();
     }
 
 

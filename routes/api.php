@@ -35,4 +35,7 @@ Route::group(['middleware' => 'web'], function() {
     
     Route::get('estabelecimento/{idEstabelecimento}/fila/sair-da-fila', [EstabelecimentoController::class, 'sairDaFila'])
         ->where('idEstabelecimento', '[0-9]+');
+
+    Route::get('estabelecimento/{idEstabelecimento}/fila/chamar-da-fila', [EstabelecimentoController::class, 'chamarPessoaDaFila'])
+        ->where('idEstabelecimento', '[0-9]+');
 });

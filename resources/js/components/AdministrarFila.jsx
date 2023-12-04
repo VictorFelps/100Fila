@@ -8,11 +8,16 @@ const AdministrarFila = () => {
   const [fila, setFila] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const requestFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/pessoas`)
-      .then(response => response.json())
-      .then(data => setFila(data))
-      .catch(error => console.error('Erro ao buscar fila:', error));
+    .then(response => response.json())
+    .then(data => setFila(data))
+    .catch(error => console.error('Erro ao buscar fila:', error));
+  }
+
+  useEffect(() => {
+    const interval = setInterval(requestFila, 3000) 
+    return () => clearInterval(interval)
   }, [id]);
 
   const adicionarPessoaFila = () => {
@@ -22,11 +27,7 @@ const AdministrarFila = () => {
   };
 
   const chamarPessoaFila = () => {
-    if (fila.length > 0) {
-      const pessoaChamada = fila[0];
-      notificarUsuario(pessoaChamada.nome);
-    }
-    removerPessoaFila();
+    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/chamar-da-fila`, { method: 'GET' })
   };
 
   const removerPessoaFila = () => {

@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { Button, Modal } from 'react-bootstrap';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
+import { Link } from 'react-router-dom';
 
 const App = () => {
     const [fila, setFila] = useState(0);
@@ -10,13 +11,14 @@ const App = () => {
     const { id } = useParams();
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [estaChamando, setChamando] = useState(false)
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
     const requisitarFilaEstabelecimento = async () => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute('content');
-        setLoading(true);
+        
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`, {
                 method: 'GET',
@@ -26,19 +28,21 @@ const App = () => {
                     Accept: 'application/json',
                 },
             });
-            const { estabelecimento, fila } = await response.json();
+            const { estabelecimento, fila, chamado } = await response.json();
             console.log('Dados da API:', estabelecimento); // Adicione este console.log para depuração
             setFila(fila);
             setNomeEstabelecimento(estabelecimento.nome);
+            setChamando(chamado === 1)
         } catch (e) {
             console.error('Erro ao requisitar fila:', e);
         } finally {
-            setLoading(false);
         }
     };
 
     useEffect(() => {
-        requisitarFilaEstabelecimento();
+        requisitarFilaEstabelecimento()
+        const intertval = setInterval(requisitarFilaEstabelecimento, 3000)
+        return () => clearInterval(intertval)
     }, []);
 
     const entrarNaFila = () => {
@@ -102,15 +106,22 @@ const App = () => {
                 <div style={styles.container}>
                     <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
                     <div style={styles.filaContainer}>
+                        {estaChamando && <p className='text-success fw-bold'>Você esta sendo chamado!</p>}
                         <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
                     </div>
                     <div className="d-flex justify-content-around mt-3">
-                        <button className="btn btn-primary" onClick={entrarNaFila} disabled={loading}>
+                        <button className="btn btn-primary" style={{ marginRight: '8px' }} onClick={entrarNaFila} disabled={loading}>
                             Entrar na fila
                         </button>
-                        <button className="btn btn-secondary" onClick={sairDaFila} disabled={loading}>
+                        <button className="btn btn-secondary" style={{ marginLeft: '8px', marginRight: '8px' }} onClick={sairDaFila} disabled={loading}>
                             Sair da fila
                         </button>
+                        {/* Botão para voltar para a página inicial */}
+                        <Link to="/">
+                            <button className="btn btn-info" style={{ marginLeft: '8px' }}>
+                                Voltar
+                            </button>
+                        </Link>
                     </div>
 
                     {/* Modal de Confirmação */}
