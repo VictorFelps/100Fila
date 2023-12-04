@@ -108,6 +108,7 @@ const App = () => {
                     <div style={styles.filaContainer}>
                         {estaChamando && <p className='text-success fw-bold'>Você esta sendo chamado!</p>}
                         <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
+                        <p style={styles.filaLength}>Sua posição na fila: {fila}</p>
                     </div>
                     <div className="d-flex justify-content-around mt-3">
                         <button className="btn btn-primary" style={{ marginRight: '8px' }} onClick={entrarNaFila} disabled={loading}>

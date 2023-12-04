@@ -11,6 +11,7 @@ import backgroundImage from './imagem.jpg';
 export default function LoginReact() {
     const navigate = useNavigate();
     const [loginError, setLoginError] = useState(false);
+    const [loginType, setLoginType] = useState('usuario');
 
     const {
         register,
@@ -28,18 +29,22 @@ export default function LoginReact() {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({...data, _token})
+            body: JSON.stringify({...data, _token, type: loginType})
         })
         .then(response => {
             if (response.ok) {
-                // Login bem-sucedido, redirecione ou faça o que for necessário
-                navigate('/');
+                // Login bem-sucedido, redirecione para a página apropriada
+                if (loginType === 'usuario') {
+                    navigate('/');
+                } else if (loginType === 'estabelecimento') {
+                    navigate('/home-estabelecimento');
+                }
             } else {
                 // Login falhou, exibir mensagem de erro
                 setLoginError(true);
             }
         })
-        .catch(error => console.log('erro', error));
+        .catch(error => console.error('Erro na solicitação:', error));
     };
 
     return (
@@ -59,7 +64,23 @@ export default function LoginReact() {
                                 {loginError && <p className="text-danger">Credenciais inválidas. Por favor, tente novamente.</p>}
                             </Form.Group>
 
-                            <div className="d-grid gap-2">
+                            <div className="d-flex justify-content-center">
+                                <Button
+                                    variant={loginType === 'usuario' ? 'success' : 'secondary'}
+                                    className="me-1"
+                                    onClick={() => setLoginType('usuario')}
+                                >
+                                    Usuário
+                                </Button>
+                                <Button
+                                    variant={loginType === 'estabelecimento' ? 'success' : 'secondary'}
+                                    onClick={() => setLoginType('estabelecimento')}
+                                >
+                                    Estabelecimento
+                                </Button>
+                            </div>
+
+                            <div className="d-grid gap-2 mt-3">
                                 <Button variant="primary" type="submit" onClick={handleSubmit(onSubmit)}>
                                     Login
                                 </Button>
