@@ -10,6 +10,8 @@ import EstabelecimentoNew from './EstabelecimentoNew';
 import PerfilReact from './PerfilReact';
 import CadastroEstabelecimento from './CadastroEstabelecimento';
 import AdministrarFila from './AdministrarFila';
+import MinhaFila from './MinhaFila';
+
 
 const App = () => {
   return (
@@ -20,6 +22,7 @@ const App = () => {
         <Route path="/cadastro" element={<CadastroReact />} />
         <Route path="/cadastro-estabelecimento" element={<CadastroEstabelecimento />} />
         <Route path="/administrar-fila/:id" element={<AdministrarFila />} />
+        <Route exact path="/minha-fila" element={<MinhaFila />} />
         <Route path="/estabelecimento">
           <Route path=':id' element={<EstabelecimentoView />} />
           <Route path='novo' element={<EstabelecimentoNew />} />

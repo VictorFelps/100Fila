@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Button, Container, Row, Col, Card, Table } from 'react-bootstrap';
 import backgroundImage from './imagem.jpg';
 
@@ -10,14 +10,14 @@ const AdministrarFila = () => {
 
   const requestFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/pessoas`)
-    .then(response => response.json())
-    .then(data => setFila(data))
-    .catch(error => console.error('Erro ao buscar fila:', error));
-  }
+      .then(response => response.json())
+      .then(data => setFila(data.map(pessoa => ({ ...pessoa, tempoEntradaFila: new Date() }))))
+      .catch(error => console.error('Erro ao buscar fila:', error));
+  };
 
   useEffect(() => {
-    const interval = setInterval(requestFila, 3000) 
-    return () => clearInterval(interval)
+    const interval = setInterval(requestFila, 3000);
+    return () => clearInterval(interval);
   }, [id]);
 
   const adicionarPessoaFila = () => {
@@ -27,7 +27,11 @@ const AdministrarFila = () => {
   };
 
   const chamarPessoaFila = () => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/chamar-da-fila`, { method: 'GET' })
+    if (fila.length > 0) {
+      fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/chamar-da-fila`, { method: 'GET' })
+    } else {
+      alert('Não há ninguém na fila no momento.');
+    }
   };
 
   const removerPessoaFila = () => {
@@ -36,11 +40,17 @@ const AdministrarFila = () => {
       .catch(error => console.error('Erro ao remover pessoa da fila:', error));
   };
 
-  const atualizarFila = () => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
+  const atualizarFila = async () => {
+    const data = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
       .then(response => response.json())
-      .then(data => setFila(data))
       .catch(error => console.error('Erro ao buscar fila:', error));
+
+    const filaAtualizada = data.map(pessoa => ({
+      ...pessoa,
+      tempoEntradaFila: fila.find(p => p.id === pessoa.id)?.tempoEntradaFila || new Date(),
+    }));
+
+    setFila(filaAtualizada);
   };
 
   const notificarUsuario = (nomePessoa) => {
@@ -51,6 +61,15 @@ const AdministrarFila = () => {
         }
       });
     }
+  };
+
+  const formatarTempoEspera = (tempoEntradaFila) => {
+    const tempoDecorridoEmSegundos = Math.floor((new Date() - new Date(tempoEntradaFila)) / 1000);
+    const horas = Math.floor(tempoDecorridoEmSegundos / 3600);
+    const minutos = Math.floor((tempoDecorridoEmSegundos % 3600) / 60);
+    const segundos = tempoDecorridoEmSegundos % 60;
+
+    return `${horas}h ${minutos}min ${segundos}s`;
   };
 
   return (
@@ -67,6 +86,9 @@ const AdministrarFila = () => {
                 <Button variant="success" onClick={chamarPessoaFila} disabled={loading} className="float-right">
                   Chamar Pessoa da Fila
                 </Button>
+                <Link to="/minha-fila" className="btn btn-primary ms-2">
+                  Voltar
+                </Link>
               </Card.Body>
             </Card>
           </Col>
@@ -75,37 +97,35 @@ const AdministrarFila = () => {
         <Card style={{ color: 'Black' }}>
           <Card.Body>
             <Card.Title>Informações da Fila</Card.Title>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>E-mail</th>
-                  <th>Tempo de Espera</th>
-                  <th>Posição na Fila</th>
-                </tr>
-              </thead>
-              <tbody>
-                {fila.map((pessoa, index) => (
-                  <tr key={index}>
-                    <td>{pessoa.user.name}</td>
-                    <td>{pessoa.user.email}</td>
-                    <td>{formatarTempoEspera(pessoa.estabelecimento.tempo)}</td>
-                    <td>{index + 1}</td>
+            {fila.length > 0 ? (
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Tempo de Espera</th>
+                    <th>Posição na Fila</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {fila.map((pessoa, index) => (
+                    <tr key={index}>
+                      <td>{pessoa.user.name}</td>
+                      <td>{pessoa.user.email}</td>
+                      <td>{formatarTempoEspera(pessoa.tempoEntradaFila)}</td>
+                      <td>{index + 1}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <p>Não há ninguém na fila no momento.</p>
+            )}
           </Card.Body>
         </Card>
       </Container>
     </div>
   );
-};
-
-const formatarTempoEspera = (tempoEsperaEmMinutos) => {
-  const horas = Math.floor(tempoEsperaEmMinutos / 60);
-  const minutos = tempoEsperaEmMinutos % 60;
-  return `${horas}h ${minutos}min`;
 };
 
 export default AdministrarFila;

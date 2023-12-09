@@ -1,29 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Form } from 'react-bootstrap';
-import { FaStore, FaMapMarkerAlt, FaFileAlt, FaSearch } from 'react-icons/fa';
+import { FaStore, FaMapMarkerAlt, FaFileAlt } from 'react-icons/fa';
 import Loader from './Loader';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
 
-const HomeReact = () => {
+const MinhaFila = () => {
   const [estabelecimentos, setEstabelecimentos] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8001/api/estabelecimento')
-      .then((response) => response.json().catch(e => e))
-      .then(json => {
+
+    fetch('SEU_ENDPOINT_PARA_O_ID_DO_USUARIO', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        // Adicione o token de autenticação, se necessário
+        // 'Authorization': `Bearer ${seuTokenDeAutenticacao}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((userData) => {
+        setUserId(userData.id);
+
+        return fetch(`http://localhost:8001/api/usuarios/${userData.id}/estabelecimentos`);
+      })
+      .then((response) => response.json())
+      .then((json) => {
         setEstabelecimentos(json);
       })
-      .catch(e => { })
+      .catch((error) => {
+        console.error('Erro ao buscar estabelecimentos:', error);
+      })
       .finally(() => setLoading(false));
   }, []);
 
   const filterEstabelecimentos = () => {
-    return estabelecimentos.filter(item =>
+    return estabelecimentos.filter((item) =>
       item.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.cnpj.includes(searchTerm) ||
       item.local.toLowerCase().includes(searchTerm.toLowerCase())
@@ -35,28 +53,13 @@ const HomeReact = () => {
       <Layout>
         <div className='container shadow-lg bg-body rounded mt-5 p-3'>
           <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
-            <span>Estabelecimentos</span>
+            <span>Minha(s) Fila(s)</span>
           </h4>
-
-          <Form.Group controlId="formSearch" className="mb-3 position-relative">
-            <div className="d-flex align-items-center rounded border">
-              <Form.Control
-                type="text"
-                placeholder="Pesquisar..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input border-0"
-              />
-              <div className="bg-primary text-white p-2 rounded-end">
-                <FaSearch style={{ cursor: 'pointer' }} />
-              </div>
-            </div>
-          </Form.Group>
 
           {isLoading && <Loader isLoading={isLoading} />}
 
           {filterEstabelecimentos().map((item, index) => (
-            <Card key={item.id} as={Link} to={`/estabelecimento/${item.id}`} style={{ marginBottom: '10px' }}>
+            <Card key={item.id} style={{ marginBottom: '10px' }}>
               <Card.Body>
                 <h5>
                   <FaStore className='mr-2' />
@@ -66,10 +69,14 @@ const HomeReact = () => {
                   <FaFileAlt className='mr-2' />
                   <strong>CNPJ:</strong> {item.cnpj}
                 </p>
-                <p style={{ marginTop: '-10px' }}>
+                <p>
                   <FaMapMarkerAlt className='mr-2' />
                   <strong>Localização:</strong> {item.local}
                 </p>
+
+                <Link to={`/administrar-fila/${item.id}`}>
+                  <Button variant="primary">Administrar Fila</Button>
+                </Link>
               </Card.Body>
             </Card>
           ))}
@@ -79,4 +86,4 @@ const HomeReact = () => {
   );
 };
 
-export default HomeReact;
+export default MinhaFila;

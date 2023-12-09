@@ -76,7 +76,7 @@ export default function LoginReact() {
                                     variant={loginType === 'estabelecimento' ? 'success' : 'secondary'}
                                     onClick={() => setLoginType('estabelecimento')}
                                 >
-                                    Estabelecimento
+                                    Administrador
                                 </Button>
                             </div>
 
