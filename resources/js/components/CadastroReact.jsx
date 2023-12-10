@@ -87,10 +87,10 @@ const CadastroReact = () => {
                                 {...register("password", { required: true, minLength: 7 })}
                             />
                             {errors?.password?.type === "required" && (
-                                <Form.Text className="text-danger">Password is required.</Form.Text>
+                                <Form.Text className="text-danger">Senha necessária.</Form.Text>
                             )}
                             {errors?.password?.type === "minLength" && (
-                                <Form.Text className="text-danger">A senha precisa de pelo menos 7 caracteres.</Form.Text>
+                                <Form.Text className="text-danger">A senha precisa de pelo menos 8 caracteres.</Form.Text>
                             )}
                         </Form.Group>
 
@@ -112,6 +112,20 @@ const CadastroReact = () => {
                                 <Form.Text className="text-danger">As senhas não são iguais.</Form.Text>
                             )}
                         </Form.Group>
+
+                        <Form.Group controlId="formAccountType">
+                                <Form.Label>Tipo de Conta</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    {...register("accountType", { required: true })}
+                                >
+                                    <option value="1">Conta de Usuário</option>
+                                    <option value="2">Conta de Administrador</option>
+                                </Form.Control>
+                                {errors?.accountType?.type === "required" && (
+                                    <Form.Text className="text-danger">É necessário escolher o tipo de conta.</Form.Text>
+                                )}
+                            </Form.Group>
 
                         <Button variant="primary" onClick={handleSubmit(onSubmit)} style={{ marginTop: '10px' }}>
                             Cadastrar-se

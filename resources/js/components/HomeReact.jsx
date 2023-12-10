@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Form } from 'react-bootstrap';
-import { FaStore, FaMapMarkerAlt, FaFileAlt, FaSearch } from 'react-icons/fa';
+import { FaStore, FaMapMarkerAlt, FaFileAlt, FaSearch, FaClock } from 'react-icons/fa';
 import Loader from './Loader';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
@@ -31,7 +31,7 @@ const HomeReact = () => {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh' }}>
       <Layout>
         <div className='container shadow-lg bg-body rounded mt-5 p-3'>
           <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
@@ -66,9 +66,13 @@ const HomeReact = () => {
                   <FaFileAlt className='mr-2' />
                   <strong>CNPJ:</strong> {item.cnpj}
                 </p>
-                <p style={{ marginTop: '-10px' }}>
+                <p>
                   <FaMapMarkerAlt className='mr-2' />
                   <strong>Localização:</strong> {item.local}
+                </p>
+                <p>
+                  <FaClock className='mr-2' />
+                  <strong>Tempo médio:</strong> {item.tempo} minutos
                 </p>
               </Card.Body>
             </Card>

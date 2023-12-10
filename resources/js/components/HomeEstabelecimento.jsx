@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card } from 'react-bootstrap';
-import { FaStore, FaMapMarkerAlt, FaFileAlt, FaUsers } from 'react-icons/fa';
+import { FaStore, FaMapMarkerAlt, FaFileAlt, FaUsers, FaClock } from 'react-icons/fa';
 import Loader from './Loader';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg'; // Import the background image
@@ -53,6 +53,10 @@ const HomeReact = () => {
                 <p style={{ marginTop: '-10px' }}> {/* Adjust the marginTop value */}
                   <FaMapMarkerAlt className='mr-2' />
                   <strong>Localização:</strong> {item.local}
+                </p>
+                <p>
+                  <FaClock className='mr-2' />
+                  <strong>Tempo médio:</strong> {item.tempo} minutos
                 </p>
               </Card.Body>
             </Card>

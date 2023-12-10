@@ -1,0 +1,56 @@
+/* LoginReact.css */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #3494e6, #ec6ead);
+}
+
+.login-card {
+    width: 400px;
+    max-width: 80%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-card label {
+    margin-bottom: 5px;
+}
+
+.login-card input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-card .text-danger {
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.login-card .d-flex {
+    margin-top: 15px;
+}
+
+.login-card button {
+    flex: 1;
+}
+
+.login-card a {
+    color: #3494e6;
+}
+
+.login-card a:hover {
+    text-decoration: underline;
+}

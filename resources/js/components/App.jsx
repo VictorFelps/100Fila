@@ -11,6 +11,8 @@ import PerfilReact from './PerfilReact';
 import CadastroEstabelecimento from './CadastroEstabelecimento';
 import AdministrarFila from './AdministrarFila';
 import MinhaFila from './MinhaFila';
+import EsqueceuSenha from './EsqueceuSenha';
+
 
 
 const App = () => {
@@ -23,6 +25,7 @@ const App = () => {
         <Route path="/cadastro-estabelecimento" element={<CadastroEstabelecimento />} />
         <Route path="/administrar-fila/:id" element={<AdministrarFila />} />
         <Route exact path="/minha-fila" element={<MinhaFila />} />
+        <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
         <Route path="/estabelecimento">
           <Route path=':id' element={<EstabelecimentoView />} />
           <Route path='novo' element={<EstabelecimentoNew />} />

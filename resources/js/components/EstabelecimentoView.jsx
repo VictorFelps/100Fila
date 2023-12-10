@@ -11,37 +11,14 @@ const App = () => {
     const { id } = useParams();
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [estaChamando, setChamando] = useState(false);
+    const [estaChamando, setChamando] = useState(false)
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
-    const notificarUsuario = (mensagem, showModal = false) => {
-        // Verifica se o navegador suporta notificações
-        if ('Notification' in window) {
-            // Verifica se já foi concedida permissão
-            if (Notification.permission === 'granted') {
-                new Notification(mensagem);
-                if (showModal) {
-                    setShowModal(true);
-                }
-            } else if (Notification.permission !== 'denied') {
-                // Caso não tenha sido concedida permissão, solicita ao usuário
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        new Notification(mensagem);
-                        if (showModal) {
-                            setShowModal(true);
-                        }
-                    }
-                });
-            }
-        }
-    };
-
     const requisitarFilaEstabelecimento = async () => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute('content');
-
+        
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`, {
                 method: 'GET',
@@ -55,27 +32,38 @@ const App = () => {
             console.log('Dados da API:', estabelecimento); // Adicione este console.log para depuração
             setFila(fila);
             setNomeEstabelecimento(estabelecimento.nome);
-            setChamando(chamado === 1);
-
-            // Notificação ao ser chamado
-            if (chamado === 1) {
-                notificarUsuario('Você está sendo chamado!', true);
-            }
+            setChamando(chamado === 1)
         } catch (e) {
             console.error('Erro ao requisitar fila:', e);
         } finally {
-            // ... (código anterior)
         }
     };
 
     useEffect(() => {
-        requisitarFilaEstabelecimento();
-        const intertval = setInterval(requisitarFilaEstabelecimento, 3000);
-        return () => clearInterval(intertval);
+        requisitarFilaEstabelecimento()
+        const intertval = setInterval(requisitarFilaEstabelecimento, 3000)
+        return () => clearInterval(intertval)
     }, []);
 
     const entrarNaFila = () => {
         handleShowModal();
+    };
+
+    const notificarUsuario = (mensagem) => {
+        // Verifica se o navegador suporta notificações
+        if ('Notification' in window) {
+            // Verifica se já foi concedida permissão
+            if (Notification.permission === 'granted') {
+                new Notification(mensagem);
+            } else if (Notification.permission !== 'denied') {
+                // Caso não tenha sido concedida permissão, solicita ao usuário
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification(mensagem);
+                    }
+                });
+            }
+        }
     };
 
     const confirmarEntrarNaFila = async () => {
@@ -86,7 +74,7 @@ const App = () => {
             console.log('Resposta da solicitação:', response);
 
             // Notificação ao entrar na fila
-            notificarUsuario('Você entrou na fila!');
+            notificarUsuario("Você entrou na fila!");
 
             requisitarFilaEstabelecimento();
         } catch (e) {
@@ -118,7 +106,7 @@ const App = () => {
                 <div style={styles.container}>
                     <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
                     <div style={styles.filaContainer}>
-                        {estaChamando && <p className='text-success fw-bold'>Você está sendo chamado!</p>}
+                        {estaChamando && <p className='text-success fw-bold'>Você esta sendo chamado!</p>}
                         <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
                         <p style={styles.filaLength}>Sua posição na fila: {fila}</p>
                     </div>
