@@ -14,7 +14,12 @@ class EstabelecimentoController extends Controller
 {
     public function index()
     {
-        return response()->json(Estabelecimento::all());
+        $user = Auth::user();
+        
+        $data = Estabelecimento::when($user->tipo == 2, function($query) use ($user) {
+            return $query->where('user_id', $user->id);
+        })->get();
+        return response()->json($data);
     }
 
     public function show($id)
@@ -33,7 +38,9 @@ class EstabelecimentoController extends Controller
     public function store(Request $request) 
     {
         try {
-            $estabelecimento = Estabelecimento::create($request->all());
+            $data = $request->all();
+            $data['user_id'] = Auth::id();
+            $estabelecimento = Estabelecimento::create($data);
             return response()->json($estabelecimento);
         } catch(Exception $e) {
             return response()->json($e->getMessage());

@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => 'web'], function() {
-    Route::resource('estabelecimento', EstabelecimentoController::class)->withoutMiddleware(['web']);
+    Route::resource('estabelecimento', EstabelecimentoController::class);
     Route::resource('usuarios', UsuarioController::class);
 
 
