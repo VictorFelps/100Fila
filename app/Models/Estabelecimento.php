@@ -18,7 +18,8 @@ class Estabelecimento extends Model
         'tempo',
         'nome',
         'local',
-        'cnpj'
+        'cnpj',
+        'user_id'
     ];
 
 }
