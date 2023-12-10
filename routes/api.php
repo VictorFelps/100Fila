@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\EstabelecimentoController;
+use App\Http\Controllers\Api\UsuarioController;
 use App\Models\Estabelecimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'web'], function() {
     Route::resource('estabelecimento', EstabelecimentoController::class)->withoutMiddleware(['web']);
+    Route::resource('usuarios', UsuarioController::class);
+
 
     Route::get('estabelecimento/{id}/fila', [EstabelecimentoController::class, 'fila'])
         ->where('id', '[0-9]+');

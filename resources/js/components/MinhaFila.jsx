@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Form } from 'react-bootstrap';
-import { FaStore, FaMapMarkerAlt, FaFileAlt } from 'react-icons/fa';
+import { Button, Card } from 'react-bootstrap';
+import { FaStore, FaMapMarkerAlt, FaFileAlt, FaArrowLeft } from 'react-icons/fa';
 import Loader from './Loader';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
@@ -15,7 +15,7 @@ const MinhaFila = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch('SEU_ENDPOINT_PARA_O_ID_DO_USUARIO', {
+    fetch('http://localhost:8001/user', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const MinhaFila = () => {
         console.error('Erro ao buscar estabelecimentos:', error);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   const filterEstabelecimentos = () => {
     return estabelecimentos.filter((item) =>
@@ -49,11 +49,17 @@ const MinhaFila = () => {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh' }}>
       <Layout>
         <div className='container shadow-lg bg-body rounded mt-5 p-3'>
           <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
             <span>Minha(s) Fila(s)</span>
+            <Link to="/home-estabelecimento">
+              <Button variant="outline-primary">
+                <FaArrowLeft className='mr-2' />
+                Voltar para Home
+              </Button>
+            </Link>
           </h4>
 
           {isLoading && <Loader isLoading={isLoading} />}

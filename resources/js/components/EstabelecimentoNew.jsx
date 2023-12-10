@@ -35,11 +35,11 @@ export default () => {
         <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh' }}>
             <Layout>
                 <Container>
-                    <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
-                        <span>Cadastrar estabelecimento</span>
-                    </h4>
                     <Card>
                         <Card.Body>
+                        <h4 className='w-100 py-3 border-bottom border-primary d-flex justify-content-between align-items-center'>
+                        <span>Cadastrar estabelecimento</span>
+                    </h4>
                             <Form>
                                 <Form.Group controlId="formTempoMedio" style={{ marginBottom: '15px' }}>
                                     <Form.Label>Tempo médio de atendimento:</Form.Label>
