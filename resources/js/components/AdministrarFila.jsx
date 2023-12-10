@@ -82,7 +82,6 @@ const AdministrarFila = () => {
               <Card.Body>
                 <h2>Administrar Fila</h2>
                 <p>Fila do estabelecimento #{id}</p>
-                <Card.Title>Quantidade de Pessoas na Fila</Card.Title>
                 <Button variant="success" onClick={chamarPessoaFila} disabled={loading} className="float-right">
                   Chamar Pessoa da Fila
                 </Button>

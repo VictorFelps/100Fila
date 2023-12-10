@@ -25,6 +25,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::group(['middleware' => 'web'], function() {
     Route::resource('estabelecimento', EstabelecimentoController::class);
     Route::resource('usuarios', UsuarioController::class);
+    Route::delete('/estabelecimento/{id}', 'EstabelecimentoController@destroy');
+
 
 
     Route::get('estabelecimento/{id}/fila', [EstabelecimentoController::class, 'fila'])
