@@ -15,8 +15,9 @@ class EstabelecimentoController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $minhasFilas = request()->input('minhas-filas', false);
         
-        $data = Estabelecimento::when($user->tipo == 2, function($query) use ($user) {
+        $data = Estabelecimento::when($minhasFilas, function($query) use ($user) {
             return $query->where('user_id', $user->id);
         })->get();
         return response()->json($data);

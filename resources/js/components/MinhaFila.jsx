@@ -28,7 +28,7 @@ const MinhaFila = () => {
       .then((userData) => {
         setUserId(userData.id);
 
-        return fetch(`http://localhost:8001/api/usuarios/${userData.id}/estabelecimentos`);
+        return fetch(`http://localhost:8001/api/estabelecimento?minhas-filas=1`);
       })
       .then((response) => response.json())
       .then((json) => {
