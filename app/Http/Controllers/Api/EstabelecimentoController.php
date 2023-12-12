@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EstabelecimentoController extends Controller
 {
@@ -100,7 +101,7 @@ class EstabelecimentoController extends Controller
     {
         //dd($id);
         $toDay = Carbon::now()->format('Y-m-d');
-        $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->count();
+        $filaAtual = Fila::where(['estabelecimento_id' => $id])->whereDate('created_at', $toDay)->count();
         $chamado = Fila::where([
             'estabelecimento_id' => $id, 
             'user_id' => Auth::id(),
@@ -108,11 +109,20 @@ class EstabelecimentoController extends Controller
         ])
             ->whereDate('created_at', $toDay)
             ->count();
+
+        $fila = Fila::where(['estabelecimento_id' => $id])->whereDate('created_at', $toDay)->get();
+        $posicao = 0;
+        $fila->each(function($item, $index) use (&$posicao) {
+            if($item->user_id == Auth::id()) {
+                $posicao = $index + 1;
+            }
+        });
         
         return response()->json([
             'estabelecimento' => Estabelecimento::find($id),
             'chamado' => $chamado,
             'fila' => $filaAtual,
+            'posicao' => $posicao,
         ]);
 
     }
@@ -141,9 +151,18 @@ class EstabelecimentoController extends Controller
         if(!$fila) {
             Fila::insert($data);
         }
+        unset($data['user_id']);
+        $fila = Fila::where($data)->get();
+
+        $posicao = 0;
+        $fila->each(function($item, $index) use ($posicao) {
+            if($item->user_id == Auth::id()) {
+                $posicao = $index + 1;
+            }
+        });
         
         return response()->json([
-            'message' => 'fila atualizada com sucesso'
+            'message' => 'fila atualizada com sucesso',
         ]);
 
     }
@@ -170,14 +189,13 @@ class EstabelecimentoController extends Controller
         $toDay = Carbon::now()->format('Y-m-d');
         $data = [
             'estabelecimento_id' => $idEstabelecimento,
-            'created_at' => $toDay
         ];
 
         Fila::where([
             'current_state' => 'CHAMANDO'
         ])->delete();
 
-        $fila = Fila::where($data)->orderBy('id', 'asc')->first();
+        $fila = Fila::where($data)->whereDate('created_at', $toDay)->orderBy('id', 'asc')->first();
         $fila->current_state = 'CHAMANDO';
         $fila->save();
     }

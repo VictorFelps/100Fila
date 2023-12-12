@@ -32,8 +32,8 @@ const App = () => {
                     Accept: 'application/json',
                 },
             });
-            const { estabelecimento, fila, chamado } = await response.json();
-
+            const { estabelecimento, fila, chamado, posicao } = await response.json();
+            setPosicaoNaFila(posicao)
             setPosicaoAnterior(fila);
             setFila(fila);
             setNomeEstabelecimento(estabelecimento.nome);
