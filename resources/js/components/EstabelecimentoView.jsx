@@ -14,7 +14,8 @@ const App = () => {
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [estaChamando, setChamando] = useState(false);
-    const [posicaoAnterior, setPosicaoAnterior] = useState(null); // Nova variável para armazenar a posição anterior
+    const [posicaoAnterior, setPosicaoAnterior] = useState(null);
+    const [posicaoNaFila, setPosicaoNaFila] = useState(0);
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
@@ -32,11 +33,8 @@ const App = () => {
                 },
             });
             const { estabelecimento, fila, chamado } = await response.json();
-            console.log('Dados da API:', estabelecimento);
 
-            // Armazenar a posição anterior antes de atualizar a fila
             setPosicaoAnterior(fila);
-
             setFila(fila);
             setNomeEstabelecimento(estabelecimento.nome);
             setChamando(chamado === 1);
@@ -69,11 +67,13 @@ const App = () => {
         handleCloseModal();
         setLoading(true);
         try {
-            // Utilizar a posição anterior ao entrar na fila
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila?posicao=${posicaoAnterior}`);
-            console.log('Resposta da solicitação:', response);
+            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila`);
+            const { message, posicao } = await response.json();
 
-            notificarUsuarioChamado();
+            setPosicaoNaFila(posicao);
+
+            toast.success(`${message} Você está na posição ${posicao} da fila!`, { autoClose: 5000 });
+
             requisitarFilaEstabelecimento();
         } catch (e) {
             console.error('Erro ao entrar na fila:', e);
@@ -87,10 +87,19 @@ const App = () => {
             console.warn('A fila está vazia.');
             return;
         }
+
+        const posicaoOriginal = posicaoNaFila; // Salva a posição original na fila
+
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/sair-da-fila`);
-            requisitarFilaEstabelecimento();
+            const { message, posicao } = await response.json();
+
+            // Atualiza a posição na fila local se a operação for bem-sucedida
+            setPosicaoNaFila(posicao);
+
+            // Notifica o usuário sobre a nova posição na fila
+            toast.success(`${message} Sua nova posição na fila é ${posicao}`, { autoClose: 5000 });
         } catch (e) {
             console.log('error', e);
         } finally {
@@ -104,9 +113,9 @@ const App = () => {
                 <div style={styles.container}>
                     <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
                     <div style={styles.filaContainer}>
-                        {estaChamando && <p className='text-success fw-bold'>Você esta sendo chamado!</p>}
+                        {estaChamando && <p className='text-success fw-bold'>Você está sendo chamado!</p>}
                         <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
-                        <p style={styles.filaLength}>Sua posição na fila: {fila}</p>
+                        <p style={styles.filaLength}>Sua posição na fila: {posicaoNaFila}</p>
                     </div>
                     <div className="d-flex justify-content-around mt-3">
                         <button className="btn btn-primary" style={{ marginRight: '8px' }} onClick={entrarNaFila} disabled={loading}>
@@ -115,7 +124,6 @@ const App = () => {
                         <button className="btn btn-secondary" style={{ marginLeft: '8px', marginRight: '8px' }} onClick={sairDaFila} disabled={loading}>
                             Sair da fila
                         </button>
-                        {/* Botão para voltar para a página inicial */}
                         <Link to="/">
                             <button className="btn btn-info" style={{ marginLeft: '8px' }}>
                                 Voltar
@@ -123,7 +131,6 @@ const App = () => {
                         </Link>
                     </div>
 
-                    {/* Modal de Confirmação */}
                     <Modal show={showModal} onHide={handleCloseModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Confirmação</Modal.Title>

@@ -22,7 +22,14 @@ const AdministrarFila = () => {
   }, [id]);
 
   const adicionarPessoaFila = () => {
-    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/adicionar`, { method: 'POST' })
+    const tempoEntrada = new Date();
+    fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/adicionar`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ tempoEntrada }),
+    })
       .then(() => atualizarFila())
       .catch(error => console.error('Erro ao adicionar pessoa à fila:', error));
   };
@@ -56,14 +63,13 @@ const AdministrarFila = () => {
     const data = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
       .then(response => response.json())
       .catch(error => console.error('Erro ao buscar fila:', error));
-
-    const filaAtualizada = data.map(pessoa => ({
+  
+    setFila(prevFila => data.map(pessoa => ({
       ...pessoa,
-      tempoEntradaFila: fila.find(p => p.id === pessoa.id)?.tempoEntradaFila || new Date(),
-    }));
-
-    setFila(filaAtualizada);
+      tempoEntradaFila: prevFila.find(p => p.id === pessoa.id)?.tempoEntradaFila || new Date(),
+    })));
   };
+  
 
   const notificarUsuarioSaida = (nomePessoa) => {
     if ('Notification' in window) {

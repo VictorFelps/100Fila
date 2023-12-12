@@ -125,24 +125,26 @@ class EstabelecimentoController extends Controller
     }
 
     public function entrarNaFila($idEstabelecimento)
-    {
-        //dd($id);
-        $toDay = Carbon::now()->format('Y-m-d');
-        $data = [
-            'estabelecimento_id' => $idEstabelecimento,
-            'user_id' => Auth::id(),
-            'created_at' => $toDay
-        ];
-        $fila = Fila::where($data)->first();
-        if(!$fila) {
-            Fila::insert($data);
-        }
-        
-        return response()->json([
-            'message' => 'fila atualizada com sucesso'
-        ]);
+{
+    $toDay = Carbon::now()->format('Y-m-d');
+    $data = [
+        'estabelecimento_id' => $idEstabelecimento,
+        'user_id' => Auth::id(),
+        'created_at' => $toDay
+    ];
 
-    }
+    $fila = Fila::where(['estabelecimento_id' => $idEstabelecimento, 'created_at' => $toDay])->count();
+    $posicao = $fila + 1; // Próxima posição disponível na fila
+
+    $data['posicao'] = $posicao;
+
+    Fila::create($data);
+
+    return response()->json([
+        'message' => 'Você entrou na fila com sucesso',
+        'posicao' => $posicao
+    ]);
+}
 
     public function sairDaFila($idEstabelecimento)
     {
