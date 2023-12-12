@@ -11,8 +11,26 @@ const AdministrarFila = () => {
   const requestFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/pessoas`)
       .then(response => response.json())
-      .then(data => setFila(data.map(pessoa => ({ ...pessoa, tempoEntradaFila: new Date() }))))
+      .then(data => setFila(data))
       .catch(error => console.error('Erro ao buscar fila:', error));
+  };
+
+  const atualizarFila = async () => {
+    const data = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
+      .then(response => response.json())
+      .catch(error => console.error('Erro ao buscar fila:', error));
+
+    const filaAtualizada = data.map(pessoa => {
+      const tempoEntradaFila = fila.find(p => p.id === pessoa.id)?.tempoEntradaFila || new Date()
+      const tempoEntradaFilaFormatado = formatarTempoEspera(tempoEntradaFila)
+      return {
+        ...pessoa,
+        tempoEntradaFila,
+        tempoEntradaFilaFormatado,
+      }
+    });
+
+    setFila(filaAtualizada);
   };
 
   useEffect(() => {
@@ -22,7 +40,6 @@ const AdministrarFila = () => {
 
   const adicionarPessoaFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/adicionar`, { method: 'POST' })
-      .then(() => atualizarFila())
       .catch(error => console.error('Erro ao adicionar pessoa à fila:', error));
   };
 
@@ -36,22 +53,10 @@ const AdministrarFila = () => {
 
   const removerPessoaFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/remover`, { method: 'DELETE' })
-      .then(() => atualizarFila())
       .catch(error => console.error('Erro ao remover pessoa da fila:', error));
   };
 
-  const atualizarFila = async () => {
-    const data = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`)
-      .then(response => response.json())
-      .catch(error => console.error('Erro ao buscar fila:', error));
 
-    const filaAtualizada = data.map(pessoa => ({
-      ...pessoa,
-      tempoEntradaFila: fila.find(p => p.id === pessoa.id)?.tempoEntradaFila || new Date(),
-    }));
-
-    setFila(filaAtualizada);
-  };
 
   const notificarUsuario = (nomePessoa) => {
     if ('Notification' in window) {
@@ -71,6 +76,8 @@ const AdministrarFila = () => {
 
     return `${horas}h ${minutos}min ${segundos}s`;
   };
+
+
 
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -112,7 +119,7 @@ const AdministrarFila = () => {
                     <tr key={index}>
                       <td>{pessoa.user.name}</td>
                       <td>{pessoa.user.email}</td>
-                      <td>{formatarTempoEspera(pessoa.tempoEntradaFila)}</td>
+                      <td>{pessoa.time}</td>
                       <td>{index + 1}</td>
                     </tr>
                   ))}

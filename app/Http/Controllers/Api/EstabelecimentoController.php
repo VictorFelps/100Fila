@@ -71,10 +71,11 @@ class EstabelecimentoController extends Controller
         $filaAtual = Fila::where(['estabelecimento_id' => $id, 'created_at' => $toDay])->count();
         $chamado = Fila::where([
             'estabelecimento_id' => $id, 
-            'created_at' => $toDay, 
             'user_id' => Auth::id(),
             'current_state' => 'CHAMANDO'
-        ])->count();
+        ])
+            ->whereDate('created_at', $toDay)
+            ->count();
         
         return response()->json([
             'estabelecimento' => Estabelecimento::find($id),
@@ -87,7 +88,10 @@ class EstabelecimentoController extends Controller
     public function pessoas($id)
     {
         $toDay = Carbon::now()->format('Y-m-d');
-        $filaAtual = Fila::with(['user','estabelecimento'])->where(['estabelecimento_id' => $id, 'created_at' => $toDay])->get();
+        $filaAtual = Fila::with(['user','estabelecimento'])
+            ->whereDate('created_at', $toDay)
+            ->where(['estabelecimento_id' => $id])
+            ->get();
         
         return response()->json($filaAtual);
     }
@@ -95,7 +99,7 @@ class EstabelecimentoController extends Controller
     public function entrarNaFila($idEstabelecimento)
     {
         //dd($id);
-        $toDay = Carbon::now()->format('Y-m-d');
+        $toDay = Carbon::now();
         $data = [
             'estabelecimento_id' => $idEstabelecimento,
             'user_id' => Auth::id(),

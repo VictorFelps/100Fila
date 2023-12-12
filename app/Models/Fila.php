@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Fila extends Model
 {
@@ -17,7 +19,7 @@ class Fila extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'created_at' => 'date:Y-m-d',
+        'created_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $fillable = [
@@ -25,6 +27,10 @@ class Fila extends Model
         'user_id',
         'created_at',
         'current_state',
+    ];
+
+    protected $appends = [
+        'time'
     ];
 
     public function user()
@@ -35,5 +41,16 @@ class Fila extends Model
     public function estabelecimento()
     {
         return $this->belongsTo(Estabelecimento::class, 'estabelecimento_id', 'id');
+    }
+
+    protected function time(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                $now = Carbon::now();
+                $created = Carbon::createFromFormat('Y-m-d H:i:s', $attributes['created_at']);
+                return $created->diff($now)->format('%H:%i:%s');
+            }
+        );
     }
 }
