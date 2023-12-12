@@ -155,7 +155,7 @@ class EstabelecimentoController extends Controller
         $fila = Fila::where($data)->get();
 
         $posicao = 0;
-        $fila->each(function($item, $index) use ($posicao) {
+        $fila->each(function($item, $index) use (&$posicao) {
             if($item->user_id == Auth::id()) {
                 $posicao = $index + 1;
             }
@@ -163,6 +163,7 @@ class EstabelecimentoController extends Controller
         
         return response()->json([
             'message' => 'fila atualizada com sucesso',
+            'posicao' => $posicao
         ]);
 
     }
@@ -174,12 +175,22 @@ class EstabelecimentoController extends Controller
         $data = [
             'estabelecimento_id' => $idEstabelecimento,
             'user_id' => Auth::id(),
-            'created_at' => $toDay
         ];
-        $fila = Fila::where($data)->delete();
+        Fila::where($data)->whereDate('created_at', $toDay)->delete();
+
+        
+        $fila = Fila::where('estabelecimento_id', $idEstabelecimento)->whereDate('created_at', $toDay)->get();
+
+        $posicao = 0;
+        $fila->each(function($item, $index) use (&$posicao) {
+            if($item->user_id == Auth::id()) {
+                $posicao = $index + 1;
+            }
+        });
         
         return response()->json([
-            'message' => 'fila atualizada com sucesso'
+            'message' => 'fila atualizada com sucesso',
+            'posicao' => $posicao
         ]);
 
     }
