@@ -8,10 +8,12 @@ import LoginReact from './LoginReact';
 import EstabelecimentoView from './EstabelecimentoView';
 import EstabelecimentoNew from './EstabelecimentoNew';
 import PerfilReact from './PerfilReact';
+import PerfilEstabelecimento from './PerfilEstabelecimento';
 import CadastroEstabelecimento from './CadastroEstabelecimento';
 import AdministrarFila from './AdministrarFila';
 import MinhaFila from './MinhaFila';
 import EsqueceuSenha from './EsqueceuSenha';
+import EditarEstabelecimento from './EditarEstabelecimento';
 
 
 
@@ -23,6 +25,7 @@ const App = () => {
         <Route exact path="/home-estabelecimento" element={<HomeEstabelecimento />} />
         <Route path="/cadastro" element={<CadastroReact />} />
         <Route path="/cadastro-estabelecimento" element={<CadastroEstabelecimento />} />
+        <Route path="/editar-estabelecimento/:id" element={<EditarEstabelecimento />} />
         <Route path="/administrar-fila/:id" element={<AdministrarFila />} />
         <Route exact path="/minha-fila" element={<MinhaFila />} />
         <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
@@ -32,6 +35,8 @@ const App = () => {
         </Route>
         <Route path="/login" element={<LoginReact />} />
         <Route path="/perfil" element={<PerfilReact />} />
+        <Route path="/perfil-estabelecimento" element={<PerfilEstabelecimento />} />
+
       </Routes>
     </Router>
   );

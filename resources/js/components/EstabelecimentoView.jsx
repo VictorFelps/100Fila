@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Button, Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
 import { Link } from 'react-router-dom';
@@ -11,14 +13,16 @@ const App = () => {
     const { id } = useParams();
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [estaChamando, setChamando] = useState(false)
+    const [estaChamando, setChamando] = useState(false);
+    const [posicaoAnterior, setPosicaoAnterior] = useState(null);
+    const [posicaoNaFila, setPosicaoNaFila] = useState(0);
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
     const requisitarFilaEstabelecimento = async () => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute('content');
-        
+
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`, {
                 method: 'GET',
@@ -29,52 +33,46 @@ const App = () => {
                 },
             });
             const { estabelecimento, fila, chamado } = await response.json();
-            console.log('Dados da API:', estabelecimento); // Adicione este console.log para depuração
+
+            setPosicaoAnterior(fila);
             setFila(fila);
             setNomeEstabelecimento(estabelecimento.nome);
-            setChamando(chamado === 1)
+            setChamando(chamado === 1);
         } catch (e) {
             console.error('Erro ao requisitar fila:', e);
-        } finally {
         }
     };
 
     useEffect(() => {
-        requisitarFilaEstabelecimento()
-        const intertval = setInterval(requisitarFilaEstabelecimento, 3000)
-        return () => clearInterval(intertval)
+        requisitarFilaEstabelecimento();
+        const interval = setInterval(requisitarFilaEstabelecimento, 3000);
+        return () => clearInterval(interval);
     }, []);
 
     const entrarNaFila = () => {
         handleShowModal();
     };
 
-    const notificarUsuario = (mensagem) => {
-        // Verifica se o navegador suporta notificações
-        if ('Notification' in window) {
-            // Verifica se já foi concedida permissão
-            if (Notification.permission === 'granted') {
-                new Notification(mensagem);
-            } else if (Notification.permission !== 'denied') {
-                // Caso não tenha sido concedida permissão, solicita ao usuário
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        new Notification(mensagem);
-                    }
-                });
-            }
+    const notificarUsuarioChamado = () => {
+        if (estaChamando) {
+            toast.success('Você está sendo chamado!', { autoClose: 5000 });
         }
     };
+
+    useEffect(() => {
+        notificarUsuarioChamado();
+    }, [estaChamando]);
 
     const confirmarEntrarNaFila = async () => {
         handleCloseModal();
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila`);
-            console.log('Resposta da solicitação:', response);
+            const { message, posicao } = await response.json();
 
-            // Notificação ao entrar na fila
-            notificarUsuario("Você entrou na fila!");
+            setPosicaoNaFila(posicao);
+
+            toast.success(`${message} Você está na posição ${posicao} da fila!`, { autoClose: 5000 });
 
             requisitarFilaEstabelecimento();
         } catch (e) {
@@ -89,10 +87,19 @@ const App = () => {
             console.warn('A fila está vazia.');
             return;
         }
+
+        const posicaoOriginal = posicaoNaFila; // Salva a posição original na fila
+
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/sair-da-fila`);
-            requisitarFilaEstabelecimento();
+            const { message, posicao } = await response.json();
+
+            // Atualiza a posição na fila local se a operação for bem-sucedida
+            setPosicaoNaFila(posicao);
+
+            // Notifica o usuário sobre a nova posição na fila
+            toast.success(`${message} Sua nova posição na fila é ${posicao}`, { autoClose: 5000 });
         } catch (e) {
             console.log('error', e);
         } finally {
@@ -106,9 +113,9 @@ const App = () => {
                 <div style={styles.container}>
                     <h2 style={styles.title}>{nomeEstabelecimento ? nomeEstabelecimento : `Estabelecimento #${id}`}</h2>
                     <div style={styles.filaContainer}>
-                        {estaChamando && <p className='text-success fw-bold'>Você esta sendo chamado!</p>}
+                        {estaChamando && <p className='text-success fw-bold'>Você está sendo chamado!</p>}
                         <p style={styles.filaLength}>Quantidade de pessoas na fila: {fila}</p>
-                        <p style={styles.filaLength}>Sua posição na fila: {fila}</p>
+                        <p style={styles.filaLength}>Sua posição na fila: {posicaoNaFila}</p>
                     </div>
                     <div className="d-flex justify-content-around mt-3">
                         <button className="btn btn-primary" style={{ marginRight: '8px' }} onClick={entrarNaFila} disabled={loading}>
@@ -117,7 +124,6 @@ const App = () => {
                         <button className="btn btn-secondary" style={{ marginLeft: '8px', marginRight: '8px' }} onClick={sairDaFila} disabled={loading}>
                             Sair da fila
                         </button>
-                        {/* Botão para voltar para a página inicial */}
                         <Link to="/">
                             <button className="btn btn-info" style={{ marginLeft: '8px' }}>
                                 Voltar
@@ -125,7 +131,6 @@ const App = () => {
                         </Link>
                     </div>
 
-                    {/* Modal de Confirmação */}
                     <Modal show={showModal} onHide={handleCloseModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Confirmação</Modal.Title>
@@ -144,6 +149,7 @@ const App = () => {
                     </Modal>
                 </div>
             </Layout>
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>
     );
 };
@@ -153,7 +159,7 @@ const styles = {
         textAlign: 'center',
         margin: '50px auto',
         padding: '20px',
-        maxWidth: '800px', // Aumentei o tamanho para 800px
+        maxWidth: '800px',
         backgroundColor: '#f8f8f8',
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',

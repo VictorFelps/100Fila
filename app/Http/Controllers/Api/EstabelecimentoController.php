@@ -64,6 +64,38 @@ class EstabelecimentoController extends Controller
         return response()->json(Estabelecimento::find($id), 204);
     }
 
+    public function update(Request $request, string $id)
+{
+    $estabelecimento = Estabelecimento::find($id);
+
+    if (!$estabelecimento) {
+        return response()->json([
+            'message' => 'Estabelecimento não encontrado'
+        ], 404);
+    }
+
+    $estabelecimento->update($request->all());
+
+    return response()->json($estabelecimento, 200);
+}
+
+    public function destroy($id)
+{
+    try {
+        $estabelecimento = Estabelecimento::find($id);
+
+        if (!$estabelecimento) {
+            return response()->json(['message' => 'Estabelecimento não encontrado'], 404);
+        }
+
+        $estabelecimento->delete();
+
+        return response()->json(['message' => 'Estabelecimento excluído com sucesso']);
+    } catch (Exception $e) {
+        return response()->json(['message' => $e->getMessage()], 500);
+    }
+}
+
     public function fila($id)
     {
         //dd($id);

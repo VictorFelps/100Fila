@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Layout from './Layout';
+import Layout from './LayoutEstabelecimento';
 import backgroundImage from './imagem.jpg'; // Importe a imagem aqui
 import { useForm } from 'react-hook-form';
 

@@ -25,6 +25,13 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::group(['middleware' => 'web'], function() {
     Route::resource('estabelecimento', EstabelecimentoController::class);
     Route::resource('usuarios', UsuarioController::class);
+    Route::put('/estabelecimento/{id}', 'EstabelecimentoController@update');
+    Route::delete('/estabelecimento/{id}', 'EstabelecimentoController@destroy');
+    Route::middleware('auth:api')->get('/usuario-autenticado', function (Request $request) {
+        return $request->user();
+    });
+
+
 
 
     Route::get('estabelecimento/{id}/fila', [EstabelecimentoController::class, 'fila'])

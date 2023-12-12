@@ -12,7 +12,11 @@ const PerfilReact = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('/api/usuarios/1'); // Substitua '/api/usuarios/1' pela rota real da sua API para buscar o usuário pelo ID 1
+        const response = await fetch('/api/usuario-autenticado', {
+          headers: {
+              'Authorization': `Bearer ${token}`,
+          },
+      }); // Substitua '/api/usuarios/1' pela rota real da sua API para buscar o usuário pelo ID 1
         const userDataFromApi = await response.json();
         setUserData(userDataFromApi);
         setLoading(false);

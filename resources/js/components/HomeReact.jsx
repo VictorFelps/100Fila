@@ -59,19 +59,19 @@ const HomeReact = () => {
             <Card key={item.id} as={Link} to={`/estabelecimento/${item.id}`} style={{ marginBottom: '10px' }}>
               <Card.Body>
                 <h5>
-                  <FaStore className='mr-2' />
+                  <FaStore style={{ marginRight: '8px' }} />
                   {item.nome}
                 </h5>
                 <p>
-                  <FaFileAlt className='mr-2' />
+                  <FaFileAlt style={{ marginRight: '8px' }} />
                   <strong>CNPJ:</strong> {item.cnpj}
                 </p>
                 <p>
-                  <FaMapMarkerAlt className='mr-2' />
+                  <FaMapMarkerAlt style={{ marginRight: '8px' }} />
                   <strong>Localização:</strong> {item.local}
                 </p>
                 <p>
-                  <FaClock className='mr-2' />
+                  <FaClock style={{ marginRight: '8px' }} />
                   <strong>Tempo médio:</strong> {item.tempo} minutos
                 </p>
               </Card.Body>

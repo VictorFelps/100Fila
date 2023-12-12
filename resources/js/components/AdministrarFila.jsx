@@ -7,6 +7,7 @@ const AdministrarFila = () => {
   const { id } = useParams();
   const [fila, setFila] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
 
   const requestFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/pessoas`)
@@ -52,6 +53,8 @@ const AdministrarFila = () => {
   };
 
   const removerPessoaFila = () => {
+    const comprimentoAnterior = fila.length;
+
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/remover`, { method: 'DELETE' })
       .catch(error => console.error('Erro ao remover pessoa da fila:', error));
   };
@@ -77,19 +80,15 @@ const AdministrarFila = () => {
     return `${horas}h ${minutos}min ${segundos}s`;
   };
 
-
-
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Container className="mt-5">
-
         <Row className="mb-3">
           <Col>
             <Card style={{ color: 'Black' }}>
               <Card.Body>
                 <h2>Administrar Fila</h2>
-                <p>Fila do estabelecimento #{id}</p>
-                <Card.Title>Quantidade de Pessoas na Fila</Card.Title>
+                <p>Fila do estabelecimento: {nomeEstabelecimento}</p>
                 <Button variant="success" onClick={chamarPessoaFila} disabled={loading} className="float-right">
                   Chamar Pessoa da Fila
                 </Button>

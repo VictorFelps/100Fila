@@ -50,28 +50,10 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="active " href="index.html">Home</a></li>
-          <li><a href="features.html">Funcionalidades</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <li><a>Funcionalidades</a></li>
             <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
+              <li><a>Fale conosco</a></li>
+
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
@@ -94,29 +76,30 @@
     </div>
 
     <div class="container">
-      <div class="row align-items-center">
+    <div class="row align-items-center">
         <div class="col-12 hero-text-image">
-          <div class="row">
-            <div class="col-lg-8 text-center text-lg-start">
-              <h1 data-aos="fade-right">Melhore seu atendimento com o 100Fila</h1>
-
-              <div>
-                <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500" style="display: inline-block; margin-right: 10px;">
-                  <a href="/app/#/cadastro" class="btn btn-outline-white">Cadastre-se</a>
-                </p>
-                <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500" style="display: inline-block;">
-                  <a href="/app/#/login" class="btn btn-outline-white">Entrar</a>
-                </p>
-              </div>
-              
+            <div class="row">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h1 data-aos="fade-right">Melhore seu atendimento com o 100Fila</h1>
+                    <div>
+                        <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500" style="display: inline-block; margin-right: 10px;">
+                            <a href="/app/#/cadastro" class="btn btn-outline-white">Cadastre-se</a>
+                        </p>
+                        <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500" style="display: inline-block;">
+                            <a href="/app/#/login" class="btn btn-outline-white">Entrar</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <!-- Adicione a imagem logo2.jpg aqui -->
+                    <img src="assets/img/logo.jpg" alt="Logo" class="img-fluid" style="max-width: 300%; height: auto;">
+                </div>
             </div>
-            <div class="col-lg-4 iphone-wrap">
-
-            </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
+
+
 
   </section><!-- End Hero -->
 
@@ -138,26 +121,24 @@
               <div class="wrap-icon icon-1">
                 <i class="bi bi-people"></i>
               </div>
-              <h3 class="mb-3">Sistema de agendamento</h3>
-              <p>Permita que seus clientes agendem facilmente seus atendimentos e consultas.</p>
+              <h3 class="mb-3">Sistema de gerenciamento</h3>
+              <p>Permite que o administrador gerencie suas filas.</p>
             </div>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <i class="bi bi-brightness-high"></i>
               </div>
-              <h3 class="mb-3">Digital Whiteboard</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3 class="mb-3">Fila remota</h3>
+              <p>Permite que os clientes acessem as filas do estabelecimento virtualmente.</p>
             </div>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
             <div class="feature-1 text-center">
               <div class="wrap-icon icon-1">
-                <i class="bi bi-bar-chart"></i>
               </div>
-              <h3 class="mb-3">Estatísticas detalhadas</h3>
-              <p>Obtenha insights valiosos sobre o desempenho das suas filas de atendimento.</p>
+              <h3 class="mb-3">Satisfação do cliente</h3>
+              <p>Soluciona o problema de lotação nos estabelecimentos e contribui para um ambiente mais organizado.</p>
             </div>
           </div>
         </div>
@@ -170,30 +151,27 @@
       <div class="container">
         <div class="row justify-content-center text-center mb-5" data-aos="fade">
           <div class="col-md-6 mb-5">
-            <img src="assets/img/undraw_svg_1.svg" alt="Image" class="img-fluid">
+          <img src="assets/img/logo2.jpg" alt="Image" class="img-fluid">
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-4">
             <div class="step">
-              <span class="number">01</span>
-              <h3>Sign Up</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3>Cadastrar</h3>
+              <p> O processo de registro no aplicativo é simples e rápido, solicitando apenas nome e um endereço de email para criar uma conta de usuário e poder acessar as filas.</p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="step">
-              <span class="number">02</span>
-              <h3>Create Profile</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3>Login</h3>
+              <p>Deve logar no sistema com usuário e senha.</p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="step">
-              <span class="number">03</span>
-              <h3>Enjoy the app</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, optio.</p>
+              <h3>Acessar o sistema</h3>
+              <p>Permite acesso as filas do estabelecimento ou cadastrar estabelecimentos</p>
             </div>
           </div>
         </div>
@@ -205,11 +183,8 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-4 me-auto">
-            <h2 class="mb-4">Seamlessly Communicate</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio,
-              laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt
-              dolore mollitia esse natus beatae.</p>
-            <p><a href="#" class="btn btn-primary">Download Now</a></p>
+            <h2 class="mb-4">Acesse as filas em qualquer lugar</h2>
+            <p class="mb-4">Possibilita a entrada em filas de espera mesmo sem estar presente no local, e apenas comparecer no estabelecimento quando estiver próximo do atendimento, sendo notificado ao se aproximar da chamada na fila, estimando o tempo de aguardo para evitar esperas desnecessárias.</p>
           </div>
           <div class="col-md-6" data-aos="fade-left">
             <img src="assets/img/undraw_svg_2.svg" alt="Image" class="img-fluid">
@@ -222,11 +197,11 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-4 ms-auto order-2">
-            <h2 class="mb-4">Gather Feedback</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur at reprehenderit optio,
-              laudantium eius quod, eum maxime molestiae porro omnis. Dolores aspernatur delectus impedit incidunt
-              dolore mollitia esse natus beatae.</p>
-            <p><a href="#" class="btn btn-primary">Download Now</a></p>
+            <h2 class="mb-4">Comodidade na espera</h2>
+            <p class="mb-4">Reduz o tempo de espera dos usuários por meio da função de entrar nas filas remotamente, 
+              e permite que os clientes entrem na fila e acompanhem sua aproximação de chamada, 
+              evitando esperas desnecessárias no mesmo e melhorando a comunicação entre os 
+              clientes e os prestadores de serviços.</p>
           </div>
           <div class="col-md-6" data-aos="fade-right">
             <img src="assets/img/undraw_svg_3.svg" alt="Image" class="img-fluid">
@@ -242,10 +217,10 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6 me-auto text-center text-md-start mb-5 mb-md-0">
-            <h2>Starts Publishing Your Apps</h2>
+            <h2>Utilize agora nosso sistema</h2>
           </div>
           <div class="col-md-5 text-center text-md-end">
-            <p><a href="#" class="btn d-inline-flex align-items-center"><i class="bx bxl-apple"></i><span>App store</span></a> <a href="#" class="btn d-inline-flex align-items-center"><i class="bx bxl-play-store"></i><span>Google play</span></a></p>
+            <p><a href="#" class="btn d-inline-flex align-items-center"><span>Sistema Web</span></a> <a href="#" class="btn d-inline-flex align-items-center"><i class="bx bxl-play-store"></i><span>Google play</span></a></p>
           </div>
         </div>
       </div>
@@ -259,40 +234,21 @@
       <div class="row">
         <div class="col-md-4 mb-4 mb-md-0">
           <h3>Sobre o 100Fila</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam aperiam
-            dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi.</p>
-          <p class="social">
-            <a href="#"><span class="bi bi-twitter"></span></a>
-            <a href="#"><span class="bi bi-facebook"></span></a>
-            <a href="#"><span class="bi bi-instagram"></span></a>
-            <a href="#"><span class="bi bi-linkedin"></span></a>
-          </p>
+          <p>Diminui as aglomerações em filas presenciais, ajudando a minimizar a exposição ao contágio pela COVID-19. Assim, os clientes podem aguardar seu atendimento onde desejarem e acompanhar o tempo de espera pelo celular.</p>
         </div>
         <div class="col-md-7 ms-auto">
           <div class="row site-section pt-0">
             <div class="col-md-4 mb-4 mb-md-0">
               <h3>Navigation</h3>
               <ul class="list-unstyled">
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#">Funcionalidades</a></li>
+                <li><a href="#">Contatos</a></li>
               </ul>
-            </div>
-            <div class="col-md-4 mb-4 mb-md-0">
-              <h3>Services</h3>
-              <ul class="list-unstyled">
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Collaboration</a></li>
-                <li><a href="#">Todos</a></li>
-                <li><a href="#">Events</a></li>
-              </ul>
-            </div>
+</div>
             <div class="col-md-4 mb-4 mb-md-0">
               <h3>Downloads</h3>
               <ul class="list-unstyled">
-                <li><a href="#">Get from the App Store</a></li>
-                <li><a href="#">Get from the Play Store</a></li>
+                <li><a href="#">Baixe na Play Store</a></li>
               </ul>
             </div>
           </div>
