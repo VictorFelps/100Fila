@@ -1,20 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import imagemBackground from './imagem.jpg';
-
-// Exemplo fictício de um contexto de autenticação
-const AuthContext = React.createContext();
-
-const useAuth = () => {
-  return useContext(AuthContext);
-};
-
-const getUserId = () => {
-  const auth = useAuth();
-  // Substitua pelo código real para obter o ID do usuário autenticado
-  return auth.user ? auth.user.id : null;
-};
 
 const PerfilReact = () => {
   const [userData, setUserData] = useState(null);
@@ -25,13 +12,11 @@ const PerfilReact = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userId = getUserId();
-        if (!userId) {
-          console.error('ID do usuário não disponível.');
-          return;
-        }
-
-        const response = await fetch(`/api/usuarios/${userId}`);
+        const response = await fetch('/api/usuario-autenticado', {
+          headers: {
+              'Authorization': `Bearer ${token}`,
+          },
+      }); // Substitua '/api/usuarios/1' pela rota real da sua API para buscar o usuário pelo ID 1
         const userDataFromApi = await response.json();
         setUserData(userDataFromApi);
         setLoading(false);
@@ -54,13 +39,7 @@ const PerfilReact = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const userId = getUserId();
-      if (!userId) {
-        console.error('ID do usuário não disponível para salvar alterações.');
-        return;
-      }
-
-      const response = await fetch(`/api/usuarios/${userId}`, {
+      const response = await fetch(`/api/usuarios/${userData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

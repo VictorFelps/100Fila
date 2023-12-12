@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Modal } from 'react-bootstrap';
 import { FaStore, FaMapMarkerAlt, FaFileAlt, FaArrowLeft } from 'react-icons/fa';
 import Loader from './Loader';
-import Layout from './Layout';
+import Layout from './LayoutEstabelecimento';
 import backgroundImage from './imagem.jpg';
 
 const MinhaFila = () => {
@@ -67,9 +67,9 @@ const MinhaFila = () => {
     if (!estabelecimentoParaExcluir) {
       return;
     }
-
+  
     const _token = document.querySelector('[name="csrf-token"]').getAttribute("content");
-
+  
     fetch(`http://localhost:8001/api/estabelecimento/${estabelecimentoParaExcluir}`, {
       method: 'DELETE',
       headers: {
@@ -81,13 +81,19 @@ const MinhaFila = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data.message);
-
-        setEstabelecimentos(estabelecimentos.filter(estabelecimento => estabelecimento.id !== estabelecimentoParaExcluir));
-
+  
+        // Log state before and after deletion
+        console.log('State before deletion:', estabelecimentos);
+  
+        setEstabelecimentos(prevEstabelecimentos => prevEstabelecimentos.filter(estabelecimento => estabelecimento.id !== estabelecimentoParaExcluir));
+  
+        console.log('State after deletion:', estabelecimentos);
+  
         handleCloseModal();
       })
       .catch(error => console.error('Erro na solicitação:', error));
   };
+  
 
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh' }}>

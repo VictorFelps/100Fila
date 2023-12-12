@@ -27,6 +27,11 @@ class UsuarioController extends Controller
         return response()->json($usuario);
     }
 
+    public function usuarioAutenticado()
+{
+    return auth()->user();
+}
+
     public function store(Request $request)
     {
         $request->validate([

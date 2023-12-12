@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Button, Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './Layout';
 import backgroundImage from './imagem.jpg';
 import { Link } from 'react-router-dom';
@@ -11,14 +13,15 @@ const App = () => {
     const { id } = useParams();
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [estaChamando, setChamando] = useState(false)
+    const [estaChamando, setChamando] = useState(false);
+    const [posicaoAnterior, setPosicaoAnterior] = useState(null); // Nova variável para armazenar a posição anterior
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
     const requisitarFilaEstabelecimento = async () => {
         const _token = document.querySelector('[name="csrf-token"]').getAttribute('content');
-        
+
         try {
             const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila`, {
                 method: 'GET',
@@ -29,53 +32,48 @@ const App = () => {
                 },
             });
             const { estabelecimento, fila, chamado } = await response.json();
-            console.log('Dados da API:', estabelecimento); // Adicione este console.log para depuração
+            console.log('Dados da API:', estabelecimento);
+
+            // Armazenar a posição anterior antes de atualizar a fila
+            setPosicaoAnterior(fila);
+
             setFila(fila);
             setNomeEstabelecimento(estabelecimento.nome);
-            setChamando(chamado === 1)
+            setChamando(chamado === 1);
         } catch (e) {
             console.error('Erro ao requisitar fila:', e);
-        } finally {
         }
     };
 
     useEffect(() => {
-        requisitarFilaEstabelecimento()
-        const intertval = setInterval(requisitarFilaEstabelecimento, 3000)
-        return () => clearInterval(intertval)
+        requisitarFilaEstabelecimento();
+        const interval = setInterval(requisitarFilaEstabelecimento, 3000);
+        return () => clearInterval(interval);
     }, []);
 
     const entrarNaFila = () => {
         handleShowModal();
     };
 
-    const notificarUsuario = (mensagem) => {
-        // Verifica se o navegador suporta notificações
-        if ('Notification' in window) {
-            // Verifica se já foi concedida permissão
-            if (Notification.permission === 'granted') {
-                new Notification(mensagem);
-            } else if (Notification.permission !== 'denied') {
-                // Caso não tenha sido concedida permissão, solicita ao usuário
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        new Notification(mensagem);
-                    }
-                });
-            }
+    const notificarUsuarioChamado = () => {
+        if (estaChamando) {
+            toast.success('Você está sendo chamado!', { autoClose: 5000 });
         }
     };
+
+    useEffect(() => {
+        notificarUsuarioChamado();
+    }, [estaChamando]);
 
     const confirmarEntrarNaFila = async () => {
         handleCloseModal();
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila`);
+            // Utilizar a posição anterior ao entrar na fila
+            const response = await fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/entrar-na-fila?posicao=${posicaoAnterior}`);
             console.log('Resposta da solicitação:', response);
 
-            // Notificação ao entrar na fila
-            notificarUsuario("Você entrou na fila!");
-
+            notificarUsuarioChamado();
             requisitarFilaEstabelecimento();
         } catch (e) {
             console.error('Erro ao entrar na fila:', e);
@@ -144,6 +142,7 @@ const App = () => {
                     </Modal>
                 </div>
             </Layout>
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>
     );
 };
@@ -153,7 +152,7 @@ const styles = {
         textAlign: 'center',
         margin: '50px auto',
         padding: '20px',
-        maxWidth: '800px', // Aumentei o tamanho para 800px
+        maxWidth: '800px',
         backgroundColor: '#f8f8f8',
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',

@@ -97,16 +97,16 @@ export default function LoginReact() {
                                 </Button>
                             </div>
 
-                            <div className="d-flex justify-content-between mt-3">
-                                <a href="#/esqueceu-senha">Esqueci minha senha</a>
-                            </div>
-
                             <div className="d-grid gap-2 mt-3">
                                 <Button variant="primary" type="submit" onClick={handleSubmit(onSubmit)}>
                                     Login
                                 </Button>
                             </div>
                         </Form>
+
+                        <div className="d-flex justify-content-between mt-3">
+                            <a href="#/esqueceu-senha">Esqueci minha senha</a>
+                        </div>
 
                         <div className="d-flex justify-content-between mt-3">
                             <a href="#/cadastro">Registre-se aqui</a>

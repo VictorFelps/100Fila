@@ -7,6 +7,7 @@ const AdministrarFila = () => {
   const { id } = useParams();
   const [fila, setFila] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
 
   const requestFila = () => {
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/pessoas`)
@@ -35,9 +36,20 @@ const AdministrarFila = () => {
   };
 
   const removerPessoaFila = () => {
+    const comprimentoAnterior = fila.length;
+
     fetch(`http://localhost:8001/api/estabelecimento/${id}/fila/remover`, { method: 'DELETE' })
       .then(() => atualizarFila())
-      .catch(error => console.error('Erro ao remover pessoa da fila:', error));
+      .catch(error => console.error('Erro ao remover pessoa da fila:', error))
+      .finally(() => {
+        const comprimentoAtual = fila.length;
+
+        // Verifica se alguém saiu da fila
+        if (comprimentoAnterior > comprimentoAtual) {
+          const pessoaRemovida = fila[comprimentoAnterior - 1]; // A pessoa removida é a última da fila
+          notificarUsuarioSaida(pessoaRemovida.user.name);
+        }
+      });
   };
 
   const atualizarFila = async () => {
@@ -51,6 +63,16 @@ const AdministrarFila = () => {
     }));
 
     setFila(filaAtualizada);
+  };
+
+  const notificarUsuarioSaida = (nomePessoa) => {
+    if ('Notification' in window) {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          new Notification(`Pessoa saiu da fila: ${nomePessoa}`);
+        }
+      });
+    }
   };
 
   const notificarUsuario = (nomePessoa) => {
@@ -72,16 +94,27 @@ const AdministrarFila = () => {
     return `${horas}h ${minutos}min ${segundos}s`;
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      requestFila();
+      fetch(`http://localhost:8001/api/estabelecimento/${id}`)
+        .then(response => response.json())
+        .then(data => setNomeEstabelecimento(data.nome))
+        .catch(error => console.error('Erro ao buscar nome do estabelecimento:', error));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [id]);
+
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Container className="mt-5">
-
         <Row className="mb-3">
           <Col>
             <Card style={{ color: 'Black' }}>
               <Card.Body>
                 <h2>Administrar Fila</h2>
-                <p>Fila do estabelecimento #{id}</p>
+                <p>Fila do estabelecimento: {nomeEstabelecimento}</p>
                 <Button variant="success" onClick={chamarPessoaFila} disabled={loading} className="float-right">
                   Chamar Pessoa da Fila
                 </Button>

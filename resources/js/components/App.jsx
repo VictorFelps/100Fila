@@ -8,6 +8,7 @@ import LoginReact from './LoginReact';
 import EstabelecimentoView from './EstabelecimentoView';
 import EstabelecimentoNew from './EstabelecimentoNew';
 import PerfilReact from './PerfilReact';
+import PerfilEstabelecimento from './PerfilEstabelecimento';
 import CadastroEstabelecimento from './CadastroEstabelecimento';
 import AdministrarFila from './AdministrarFila';
 import MinhaFila from './MinhaFila';
@@ -34,6 +35,8 @@ const App = () => {
         </Route>
         <Route path="/login" element={<LoginReact />} />
         <Route path="/perfil" element={<PerfilReact />} />
+        <Route path="/perfil-estabelecimento" element={<PerfilEstabelecimento />} />
+
       </Routes>
     </Router>
   );

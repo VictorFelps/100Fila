@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card } from 'react-bootstrap';
 import { FaStore, FaMapMarkerAlt, FaFileAlt, FaUsers, FaClock } from 'react-icons/fa';
 import Loader from './Loader';
-import Layout from './Layout';
+import Layout from './LayoutEstabelecimento';
 import backgroundImage from './imagem.jpg'; // Import the background image
 
 const HomeReact = () => {
@@ -43,19 +43,19 @@ const HomeReact = () => {
             <Card style={{ marginBottom: '10px' }} key={index}>
               <Card.Body>
                 <h5>
-                  <FaStore className='mr-2' />
+                  <FaStore style={{ marginRight: '8px' }} />
                   {item.nome}
                 </h5>
                 <p>
-                  <FaFileAlt className='mr-2' />
+                  <FaFileAlt style={{ marginRight: '8px' }} />
                   <strong>CNPJ:</strong> {item.cnpj}
                 </p>
                 <p style={{ marginTop: '-10px' }}> {/* Adjust the marginTop value */}
-                  <FaMapMarkerAlt className='mr-2' />
+                  <FaMapMarkerAlt style={{ marginRight: '8px' }} />
                   <strong>Localização:</strong> {item.local}
                 </p>
                 <p>
-                  <FaClock className='mr-2' />
+                  <FaClock style={{ marginRight: '8px' }} />
                   <strong>Tempo médio:</strong> {item.tempo} minutos
                 </p>
               </Card.Body>

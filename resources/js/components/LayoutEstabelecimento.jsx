@@ -39,10 +39,10 @@ export default ({ children }) => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Link to="/perfil" className="nav-link border-end pe-3">
+                            <Link to="/perfil-estabelecimento" className="nav-link border-end pe-3">
                                 Perfil
                             </Link>
-                            <Link to="/" className="nav-link border-end pe-3">
+                            <Link to="/home-estabelecimento" className="nav-link border-end pe-3">
                                 Estabelecimentos
                             </Link>
                             <NavLink onClick={logout} className="pe-3">

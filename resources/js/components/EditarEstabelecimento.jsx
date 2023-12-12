@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Container, Form, Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import Layout from './Layout';
+import Layout from './LayoutEstabelecimento';
 import backgroundImage from './imagem.jpg';
 import { useForm } from 'react-hook-form';
 
